@@ -1,0 +1,12 @@
+# Ignore everything
+*
+
+# Except the StitchNiche directory
+!StitchNiche/
+
+# Ignore everything inside StitchNiche/.idea (PyCharm project files)
+StitchNiche/.idea/
+
+# Optional: Ignore Python compiled files
+**/__pycache__/
+**/*.pyc
