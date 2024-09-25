@@ -13,7 +13,7 @@ When you download this repo, make sure you to put it in your PyCharmProjects fol
 - Kivy 2.3.0
 - kivymd 1.2.0
 - pandas 2.2.3
-- numpy 2.1.1
+- numpy 2.0.2
 6. You can now start coding using Kivy. Here is the starter code:
 ```
 from kivymd.app import MDApp
