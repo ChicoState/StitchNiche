@@ -1,6 +1,9 @@
 [Where I got environment setup from](https://www.youtube.com/watch?v=LRXo0juuTrw&t)
 
-Initializing a new project steps:
+# Downloading the Repo
+When you download this repo, make sure you to put it in your PyCharmProjects folder. On Windows, it should be located in `C:\Users\***YOUR USERNAME***\PycharmProjects`
+
+# Initializing a new project steps:
 
 1. Download Python 3.9. Use the Microsoft Store if you are using Windows.
 2. Check that you have properly downloaded it by running python --version. If it doesn't appear, make sure you have added the Python bin directory to your path. Here is a video on how to do that: https://www.geeksforgeeks.org/how-to-add-python-to-windows-path/
