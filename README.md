@@ -1,7 +1,7 @@
 [Where I got environment setup from](https://www.youtube.com/watch?v=LRXo0juuTrw&t)
 
-# Downloading the Repo
-When you download this repo, make sure you to put it in your PyCharmProjects folder. On Windows, it should be located in `C:\Users\***YOUR USERNAME***\PycharmProjects`
+# Cloning the Repo
+Use Pycharm's built in version control to connect to this repo after creating a new project.
 
 # Initializing a new project steps:
 
