@@ -5,37 +5,53 @@ stitch_calculator is responsible for all mathematics done with stitches
 """
 import re
 
-class stitch_calculator():
-    def __init__():
+class StitchCalculator():
+    def __init__(self):
         pass
-
 
 # arguments: string userIn, string mode
 #            mode should be either "int" or "float" depending on which should be checked
 # return: boolean, True means string is valid
 
-def isValid(userIn, mode):
-    isValid = True
-    
-    if (mode == "int"):
-        if (not userIn.isdigit()):
+    def isValid(self, userIn, mode):
+        isValid = True
+
+        if (mode == "int"):
+            if (not userIn.isdigit()):
+                isValid = False
+                print("Number must be a positive integer!")
+
+        elif (mode == "float"):
+            try:
+                float(userIn)
+            except ValueError:
+                print("Number must be a valid float!")
+                isValid = False
+
+            if (re.search("-", userIn) != None):
+                print("Number must be positive!")
+                isValid = False
+
+
+        else:
+            print("Mode must be int or float")
             isValid = False
-            print("Number must be a positive integer!")
 
-    elif (mode == "float"):
-        try:
-            float(userIn)
-        except ValueError:
-            print("Number must be a valid float!")
-            isValid = False
+        return isValid
 
-        if (re.search("-", userIn) != None):
-            print("Number must be positive!")
-            isValid = False
+    def rectangle_calculator(self, gauge_w, width, s_multiple, s_remainder, gauge_l, length, r_multiple, r_remainder ):
+        stitches = self.one_dim_calculator(gauge_w, width, s_multiple, s_remainder)
+        rows = self.one_dim_calculator(gauge_l, length, r_multiple, r_remainder)
+        return (stitches, rows)
 
-
-    else:
-        print("Mode must be int or float")
-        isValid = False
-        
-    return isValid
+    def one_dim_calculator(self, gauge, x, multiple , remainder):
+        estimate = int(x / gauge)
+        difference = estimate % multiple
+        if difference == remainder:
+            return estimate
+        elif difference + 1 == remainder:
+            return estimate + 1
+        else:
+            option1 = difference - remainder
+            option2 = difference + remainder
+            return min((option1, option2))
