@@ -18,7 +18,7 @@ class StitchNicheApp(App):
     def build(self):
         self.sc = StitchCalculator()
         # Main layout for the form
-        layout = BoxLayout(orientation='vertical', padding=(20, 20, 20, 20), spacing=10)
+        layout = BoxLayout(orientation='vertical',spacing=30)
         
         # Title
         title_label = Label(text="Stitch Niche", font_size='32sp', color=(0.5, 0, 0.5, 1))
@@ -29,7 +29,7 @@ class StitchNicheApp(App):
         layout.add_widget(title_label)
 
         # Form layout
-        form_layout = GridLayout(cols=2, padding=5, spacing=5, size_hint=(0.5, None))
+        form_layout = GridLayout(cols=2, padding=5, spacing=20, size_hint=(0.90, None))
         form_layout.bind(minimum_height=form_layout.setter('height'))  # Make it wrap content
 
         # Cast on Stitch Title
@@ -76,9 +76,9 @@ class StitchNicheApp(App):
 
         # Label to show the result
         self.result_label = Label(text="Result", color=(0.5, 0, 0.5, 1))
-        form_layout.add_widget(self.result_label)
+        layout.add_widget(self.result_label)
         # Submit Button
-        submit_button = Button(text="Submit", size_hint=(None, 0.5), height=50)
+        submit_button = Button(text="Submit", size_hint=(1, None), height=200)
         submit_button.bind(on_press=self.submit)
         layout.add_widget(submit_button)
 
