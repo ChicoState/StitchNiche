@@ -44,12 +44,12 @@ class StitchCalculator():
 
         return isValid
 
-    def rectangle_calculator(self, gauge_w, width, s_multiple, s_remainder, gauge_l, length, r_multiple, r_remainder ):
-        stitches = self.one_dim_calculator(gauge_w, width, s_multiple, s_remainder)
-        rows = self.one_dim_calculator(gauge_l, length, r_multiple, r_remainder)
+    def rectangle_calculator(self, width, length, gauge_l, gauge_w, s_multiple, s_remainder, r_multiple, r_remainder ):
+        stitches = self.one_dim_calculator(width, gauge_w, s_multiple, s_remainder)
+        rows = self.one_dim_calculator(length, gauge_l, r_multiple, r_remainder)
         return (stitches, rows)
 
-    def one_dim_calculator(self, gauge, x, multiple , remainder):
+    def one_dim_calculator(self, x, gauge, multiple , remainder):
         estimate = int(x / gauge)
         difference = (estimate -  remainder)% multiple
         if difference == 0:
