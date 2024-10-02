@@ -21,8 +21,8 @@ class StitchNicheApp(App):
         layout = BoxLayout(orientation='vertical',spacing=30)
         
         # Title
-        GenerateFormKivy.form({"input 1" : 0.0,
-                          "input 2" : "inches",}, styles = )
+        #GenerateFormKivy.form({"input 1" : 0.0,
+        #                 "input 2" : "inches",}, styles = )
         title_label = Label(text="Stitch Niche", font_size='32sp', color=(0.5, 0, 0.5, 1))
         layout.add_widget(title_label)
 
