@@ -55,3 +55,12 @@ class StitchCalculator():
             option1 = difference - remainder
             option2 = difference + remainder
             return min((option1, option2))
+
+class GenerateWidgets():
+    def __init__(self):
+        pass
+
+    # Create a form
+    # labels is a dictionary like {"input1" : 0.0}, first being the label, second being the type
+    def generate_number_form(self, labels, styles):
+        pass
