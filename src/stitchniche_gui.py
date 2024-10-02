@@ -8,11 +8,15 @@ from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
 
+# Import the StitchCalculator class
+from utils import StitchCalculator
+
 # Set the background color to white
 Window.clearcolor = (1, 1, 1, 1)  # RGBA
 
 class StitchNicheApp(App):
     def build(self):
+        self.sc = StitchCalculator()
         # Main layout for the form
         layout = BoxLayout(orientation='vertical', padding=(20, 20, 20, 20), spacing=10)
         
@@ -70,6 +74,9 @@ class StitchNicheApp(App):
 
         layout.add_widget(form_layout)
 
+        # Label to show the result
+        self.result_label = Label(text="Result", color=(0.5, 0, 0.5, 1))
+        form_layout.add_widget(self.result_label)
         # Submit Button
         submit_button = Button(text="Submit", size_hint=(None, 0.5), height=50)
         submit_button.bind(on_press=self.submit)
@@ -80,12 +87,21 @@ class StitchNicheApp(App):
     def submit(self, instance):
         # Capture all inputs into a dictionary
         outputs = {
-            "Width": self.width_input.text,
-            "Length": self.length_input.text,
-            "Gauge Width": self.gauge_width_input.text,
-            "Gauge Length": self.gauge_length_input.text,
+            "Width": float(self.width_input.text),
+            "Length": float(self.length_input.text),
+            "Gauge Width": float(self.gauge_width_input.text),
+            "Gauge Length": float(self.gauge_length_input.text),
             "Patterns": {f"Pattern {chr(65+i)}": input_field.text for i, input_field in enumerate(self.pattern_inputs)}
         }
+
+        result = self.sc.rectangle_calculator(float(self.width_input.text),
+                     float(self.length_input.text),
+                     float(self.gauge_width_input.text),
+                     float(self.gauge_length_input.text),
+                     float(self.pattern_inputs[0].text),
+                     float(self.pattern_inputs[1].text),
+                     float(self.pattern_inputs[2].text),
+                     float(self.pattern_inputs[3].text),)
 
         # Print or process the outputs as needed (for demonstration)
         print(outputs)  # You can remove this line later
@@ -96,6 +112,9 @@ class StitchNicheApp(App):
         self.gauge_length_input.text = ""
         for input_field in self.pattern_inputs:
             input_field.text = ""
+
+
+        self.result_label.text = str(result);
 
 if __name__ == "__main__":
     StitchNicheApp().run()
