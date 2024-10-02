@@ -8,7 +8,7 @@ from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
 
-from src.utils import Styles
+from utils import Styles
 # Import the StitchCalculator class
 from utils import StitchCalculator
 from utils import GenerateWidgets
@@ -35,9 +35,10 @@ class StitchNicheApp(App):
 
         # Form layout
 
-
+        style = Styles(color=(0.5, 0, 0.5, 1), size_hint=(0.90, None), height=35, background_color=(1, 1, 1, 1), padding=5, spacing=20)
+        input_label = ["width_input", "length_input", "gauge_width_input", "gauge_length_input", "a", "b", "c", "d"]
         gen = GenerateWidgets()
-        layout, text_inputs = gen.generate_number_form(cols = 2, layout = layout, labels = ["width_input", "length_input", "gauge_width_input", "gauge_length_input", "a", "b", "c", "d"], styles=Styles(color=(0.5, 0, 0.5, 1), size_hint=(0.90, None), height=35, background_color=(0.5, 0, 0.5, 1), padding=5, spacing=20), submit_handler=self.submit)
+        layout, text_inputs, self.result_label = gen.generate_number_form(cols = 2, layout = layout, labels = input_label, styles=style, submit_handler=self.submit)
         self.width_input = text_inputs['width_input']
         self.length_input = text_inputs['length_input']
         self.gauge_width_input = text_inputs['gauge_width_input']

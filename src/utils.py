@@ -61,7 +61,7 @@ class StitchCalculator():
             option2 = difference + remainder
             return min((option1, option2))
 
-class Styles():
+class Styles:
     def __init__(self, color, size_hint, height, background_color, padding, spacing):
         self.color = color
         self.size_hint = size_hint
@@ -71,7 +71,7 @@ class Styles():
         self.spacing = spacing
 
 
-class GenerateWidgets():
+class GenerateWidgets:
     def __init__(self):
         pass
 
@@ -85,8 +85,9 @@ class GenerateWidgets():
             text_inputs[name] = TextInput(size_hint=styles.size_hint, height=styles.height, background_color=styles.background_color)
             form_layout.add_widget(text_inputs[name])
         layout.add_widget(form_layout)
-        layout.add_widget(Label(text="Result", color=styles.color))
+        result = Label(text="Result", color=styles.color)
+        layout.add_widget(result)
         submit_button = Button(text="Submit", size_hint=styles.size_hint, height=styles.height, background_color=styles.background_color)
         submit_button.bind(on_press=submit_handler)
         layout.add_widget(submit_button)
-        return layout, text_inputs
+        return layout, text_inputs, result
