@@ -51,15 +51,18 @@ class StitchCalculator():
 
     def one_dim_calculator(self, gauge, x, multiple , remainder):
         estimate = int(x / gauge)
-        difference = estimate % multiple
-        if difference == remainder:
+        difference = (estimate -  remainder)% multiple
+        if difference == 0:
             return estimate
-        elif difference + 1 == remainder:
+        elif difference  == 1:
             return estimate + 1
         else:
-            option1 = difference - remainder
-            option2 = difference + remainder
-            return min((option1, option2))
+            option1 = estimate - difference + multiple
+            option2 = estimate - difference
+            if difference > abs(multiple - difference):
+                return option1
+            else:
+                return option2
 
 class Styles():
     def __init__(self, color, size_hint, height, background_color, padding, spacing):
@@ -69,7 +72,6 @@ class Styles():
         self.background_color = background_color
         self.padding = padding
         self.spacing = spacing
-
 
 class GenerateWidgets():
     def __init__(self):
