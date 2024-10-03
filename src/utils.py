@@ -50,7 +50,7 @@ class StitchCalculator():
         return (stitches, rows)
 
     def one_dim_calculator(self, x, gauge, multiple , remainder):
-        estimate = int(x / gauge)
+        estimate = int(x * gauge)
         difference = (estimate -  remainder)% multiple
         if difference == 0:
             return estimate
