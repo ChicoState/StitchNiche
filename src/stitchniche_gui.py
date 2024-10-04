@@ -66,7 +66,7 @@ class StitchNicheApp(App):
 
         # Pattern Inputs
         self.pattern_inputs = []
-        for pattern in ['A', 'B', 'C', 'D']:
+        for pattern in ["Stitch Multiple", "Stitch Remainder", "Row Multiple", "Row Remainder"]:
             form_layout.add_widget(Label(text=f"{pattern}:", color=(0.5, 0, 0.5, 1)))
             pattern_input = TextInput(size_hint_y=None, height=25, background_color=(1, 1, 1, 1),
                                       size_hint_x=0.5)
