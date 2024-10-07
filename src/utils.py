@@ -7,6 +7,7 @@ import re
 
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
+from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 
@@ -82,19 +83,27 @@ class GenerateWidgets:
     # Create a form
     # labels is a dictionary like {"input1" : 0.0}, first being the label, second being the type
     def generate_number_form(self, cols, labels, styles, layout, submit_handler):
-        form_layout = GridLayout(cols=cols, padding=styles.padding, spacing=styles.spacing, size_hint=(1, 1))
+        scroll_view = ScrollView(size_hint=(1, 6))
+        form_layout = GridLayout(cols=cols, padding=styles.padding, spacing=styles.spacing, size_hint_y=None)
+        form_layout.bind(minimum_height=form_layout.setter('height'))  # Adjust the height to fit content dynamically
+
         text_inputs = {}
-        for key,value in labels.items():
+        for key, value in labels.items():
             form_layout.add_widget(Label(text=key, color=styles.header_color))
             form_layout.add_widget(Label())
             for name in value:
                 form_layout.add_widget(Label(text=name, color=styles.label_color))
-                text_inputs[name] = TextInput(size_hint=styles.size_hint, height=styles.height, background_color=styles.background_color)
+                text_inputs[name] = TextInput(size_hint=styles.size_hint, height=styles.height,
+                                              background_color=styles.background_color)
                 form_layout.add_widget(text_inputs[name])
-        layout.add_widget(form_layout)
+
+        scroll_view.add_widget(form_layout)
+        layout.add_widget(scroll_view)
         result = Label(text="Result", color=styles.header_color)
         layout.add_widget(result)
-        submit_button = Button(text="Submit", size_hint=styles.size_hint, height=styles.height, background_color=styles.background_color)
+        submit_button = Button(text="Submit", size_hint=styles.size_hint, height=styles.height,
+                               background_color=styles.background_color)
         submit_button.bind(on_press=submit_handler)
         layout.add_widget(submit_button)
+
         return layout, text_inputs, result
