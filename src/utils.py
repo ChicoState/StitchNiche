@@ -62,8 +62,9 @@ class StitchCalculator():
             return min((option1, option2))
 
 class Styles:
-    def __init__(self, color, size_hint, height, background_color, padding, spacing):
-        self.color = color
+    def __init__(self, label_color, header_color, size_hint, height, background_color, padding, spacing):
+        self.label_color = label_color
+        self.header_color = header_color
         self.size_hint = size_hint
         self.height = height
         self.background_color = background_color
@@ -80,12 +81,15 @@ class GenerateWidgets:
     def generate_number_form(self, cols, labels, styles, layout, submit_handler):
         form_layout = GridLayout(cols=cols, padding=styles.padding, spacing=styles.spacing, size_hint=(1, 1))
         text_inputs = {}
-        for name in labels:
-            form_layout.add_widget(Label(text=name, color=styles.color))
-            text_inputs[name] = TextInput(size_hint=styles.size_hint, height=styles.height, background_color=styles.background_color)
-            form_layout.add_widget(text_inputs[name])
+        for key,value in labels.items():
+            form_layout.add_widget(Label(text=key, color=styles.header_color))
+            form_layout.add_widget(Label())
+            for name in value:
+                form_layout.add_widget(Label(text=name, color=styles.label_color))
+                text_inputs[name] = TextInput(size_hint=styles.size_hint, height=styles.height, background_color=styles.background_color)
+                form_layout.add_widget(text_inputs[name])
         layout.add_widget(form_layout)
-        result = Label(text="Result", color=styles.color)
+        result = Label(text="Result", color=styles.header_color)
         layout.add_widget(result)
         submit_button = Button(text="Submit", size_hint=styles.size_hint, height=styles.height, background_color=styles.background_color)
         submit_button.bind(on_press=submit_handler)
