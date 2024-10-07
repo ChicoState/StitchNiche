@@ -44,22 +44,25 @@ class StitchCalculator():
 
         return isValid
 
-    def rectangle_calculator(self, gauge_w, width, s_multiple, s_remainder, gauge_l, length, r_multiple, r_remainder ):
-        stitches = self.one_dim_calculator(gauge_w, width, s_multiple, s_remainder)
-        rows = self.one_dim_calculator(gauge_l, length, r_multiple, r_remainder)
+    def rectangle_calculator(self, width, length, gauge_l, gauge_w, s_multiple, s_remainder, r_multiple, r_remainder ):
+        stitches = self.one_dim_calculator(width, gauge_w, s_multiple, s_remainder)
+        rows = self.one_dim_calculator(length, gauge_l, r_multiple, r_remainder)
         return (stitches, rows)
 
-    def one_dim_calculator(self, gauge, x, multiple , remainder):
-        estimate = int(x / gauge)
-        difference = estimate % multiple
-        if difference == remainder:
+    def one_dim_calculator(self, x, gauge, multiple , remainder):
+        estimate = int(x * gauge)
+        difference = (estimate -  remainder)% multiple
+        if difference == 0:
             return estimate
-        elif difference + 1 == remainder:
+        elif difference  == 1:
             return estimate + 1
         else:
-            option1 = difference - remainder
-            option2 = difference + remainder
-            return min((option1, option2))
+            option1 = estimate - difference + multiple
+            option2 = estimate - difference
+            if difference > abs(multiple - difference):
+                return option1
+            else:
+                return option2
 
 class Styles:
     def __init__(self, label_color, header_color, size_hint, height, background_color, padding, spacing):
