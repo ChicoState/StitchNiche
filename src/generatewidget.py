@@ -1,5 +1,7 @@
 import os
 import sys
+from email.quoprimime import header_decode
+
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
@@ -8,7 +10,7 @@ from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
 
-from src.utils import Styles
+from utils import Styles
 # Import the StitchCalculator class
 from utils import StitchCalculator
 from utils import GenerateWidgets
@@ -35,18 +37,19 @@ class StitchNicheApp(App):
 
         # Form layout
 
-
+        style = Styles(label_color=(0.5, 0, 0.5, 1), header_color = (0.8, 0, 0.1), size_hint=(0.90, None), height=35, background_color=(1, 1, 1, 1), padding=5, spacing=20)
+        input_label = {"Cast on stitch #:" : ["width_input", "length_input", "gauge_width_input", "gauge_length_input"], "Pattern:" : ["Stitch Multiple", "Stitch Remainder", "Row Multiple", "Row Remainder"]}
         gen = GenerateWidgets()
-        layout, text_inputs = gen.generate_number_form(cols = 2, layout = layout, labels = ["width_input", "length_input", "gauge_width_input", "gauge_length_input", "a", "b", "c", "d"], styles=Styles(color=(0.5, 0, 0.5, 1), size_hint=(0.90, None), height=35, background_color=(0.5, 0, 0.5, 1), padding=5, spacing=20), submit_handler=self.submit)
+        layout, text_inputs, self.result_label = gen.generate_number_form(cols = 2, layout = layout, labels = input_label, styles=style, submit_handler=self.submit)
         self.width_input = text_inputs['width_input']
         self.length_input = text_inputs['length_input']
         self.gauge_width_input = text_inputs['gauge_width_input']
         self.gauge_length_input = text_inputs['gauge_length_input']
         self.pattern_inputs = []
-        self.pattern_inputs.append(text_inputs['a'])
-        self.pattern_inputs.append(text_inputs['b'])
-        self.pattern_inputs.append(text_inputs['c'])
-        self.pattern_inputs.append(text_inputs['d'])
+        self.pattern_inputs.append(text_inputs['Stitch Multiple'])
+        self.pattern_inputs.append(text_inputs['Stitch Remainder'])
+        self.pattern_inputs.append(text_inputs['Row Multiple'])
+        self.pattern_inputs.append(text_inputs['Row Remainder'])
 
 
         return layout
@@ -72,7 +75,7 @@ class StitchNicheApp(App):
                                               float(self.pattern_inputs[3].text), )
 
         # Print or process the outputs as needed (for demonstration)
-        print(outputs)  # You can remove this line later
+        # print(outputs)  # You can remove this line later
         # Refresh the app by resetting input fields
         self.width_input.text = ""
         self.length_input.text = ""
