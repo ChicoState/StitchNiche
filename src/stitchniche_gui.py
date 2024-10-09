@@ -7,6 +7,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
+from kivy.uix.screenmanager import Screen
 
 # Import the StitchCalculator class
 from utils import StitchCalculator
@@ -14,8 +15,9 @@ from utils import StitchCalculator
 # Set the background color to white
 Window.clearcolor = (1, 1, 1, 1)  # RGBA
 
-class StitchNicheApp(App):
-    def build(self):
+class Stitch_Calc(Screen):
+    def __init__(self, **kwargs):
+        super(Stitch_Calc,self).__init__(**kwargs)
         self.sc = StitchCalculator()
         # Main layout for the form
         layout = BoxLayout(orientation='vertical',spacing=30, size_hint=(1, 1))
@@ -83,7 +85,7 @@ class StitchNicheApp(App):
         submit_button.bind(on_press=self.submit)
         layout.add_widget(submit_button)
 
-        return layout
+        self.add_widget(layout)
 
     def submit(self, instance):
         # Capture all inputs into a dictionary
