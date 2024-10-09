@@ -40,24 +40,24 @@ class StitchNicheApp(App):
         # Width
         form_layout.add_widget(Label(text="Width (inches):", color=(0.5, 0, 0.5, 1)))
         self.width_input = TextInput(size_hint_y=None, height=25, background_color=(1, 1, 1, 1),
-                                      size_hint_x=0.5)
+                                      size_hint_x=0.5, padding_y = (3,3))
         form_layout.add_widget(self.width_input)
 
         # Length
         form_layout.add_widget(Label(text="Length (inches):", color=(0.5, 0, 0.5, 1)))
         self.length_input = TextInput(size_hint_y=None, height=25, background_color=(1, 1, 1, 1),
-                                       size_hint_x=0.5)
+                                       size_hint_x=0.5, padding_y = (3,3))
         form_layout.add_widget(self.length_input)
 
         # Gauge
         form_layout.add_widget(Label(text="Gauge Width (inches):", color=(0.5, 0, 0.5, 1)))
         self.gauge_width_input = TextInput(size_hint_y=None, height=25, background_color=(1, 1, 1, 1),
-                                            size_hint_x=0.5)
+                                            size_hint_x=0.5, padding_y = (3,3))
         form_layout.add_widget(self.gauge_width_input)
 
         form_layout.add_widget(Label(text="Gauge Length (inches):", color=(0.5, 0, 0.5, 1)))
         self.gauge_length_input = TextInput(size_hint_y=None, height=25, background_color=(1, 1, 1, 1),
-                                             size_hint_x=0.5)
+                                             size_hint_x=0.5, padding_y = (3,3))
         form_layout.add_widget(self.gauge_length_input)
 
         # Pattern Title
@@ -69,7 +69,7 @@ class StitchNicheApp(App):
         for pattern in ["Stitch Multiple", "Stitch Remainder", "Row Multiple", "Row Remainder"]:
             form_layout.add_widget(Label(text=f"{pattern}:", color=(0.5, 0, 0.5, 1)))
             pattern_input = TextInput(size_hint_y=None, height=25, background_color=(1, 1, 1, 1),
-                                      size_hint_x=0.5)
+                                      size_hint_x=0.5, padding_y = (3,3))
             self.pattern_inputs.append(pattern_input)
             form_layout.add_widget(pattern_input)
 
