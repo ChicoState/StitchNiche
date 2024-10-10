@@ -45,11 +45,47 @@ class StitchCalculator():
         return isValid
 
     def rectangle_calculator(self, width, length, gauge_l, gauge_w, s_multiple, s_remainder, r_multiple, r_remainder ):
+        """
+        Calculates the number stitches to cast on and rows to complete to make a rectangle of size width * length,
+        while fitting the pattern constraints
+
+        Parameter width: 
+        Precondition: width is a float > 0
+        Parameter length: 
+        Precondition: length is a float > 0
+        Parameter gauge_l: the number of rows per inch
+        Precondition: gauge is a float > 0
+        Parameter gauge_w: the number of stitches per inch
+        Precondition: gauge is a float > 0
+        Parameter s_multiple: a pattern constraint (stitch_multiple)
+        Precondition: s_multiple is a integer >= 1
+        Parameter s_remainder: a pattern constraint (stitch_remainder)
+        Precondition: s_remainder is an integer >= 0
+        Parameter r_multiple: a pattern constraint (row_multiple)
+        Precondition: r_multiple is a integer >= 1
+        Parameter r_remainder: a pattern constraint (row_remainder)
+        Precondition: r_remainder is an integer >= 0
+        :return: (number of stitches to cast on: integer, number of rows to complete: integer)
+        """
         stitches = self.one_dim_calculator(width, gauge_w, s_multiple, s_remainder)
         rows = self.one_dim_calculator(length, gauge_l, r_multiple, r_remainder)
         return (stitches, rows)
 
     def one_dim_calculator(self, x, gauge, multiple , remainder):
+        """
+        Finds the number of rows/stitches that will be closest in size to x while fitting pattern constraints:
+        being equal to  n*multiple + remainder for some natural number, n
+
+        Parameter x: 
+        Precondition: x is a float > 0
+        Parameter gauge: the number of stitches/rows per inch
+        Precondition: gauge is a float > 0
+        Parameter multiple: a pattern constraint
+        Precondition: multiple is a integer >= 1
+        Parameter remainder: a pattern constraint
+        Precondition: remainder is an integer >= 0
+        :return: integer best fit for stitch/row number to be x wide/long 
+        """
         estimate = int(x * gauge)
         difference = (estimate -  remainder)% multiple
         if difference == 0:
