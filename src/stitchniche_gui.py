@@ -7,6 +7,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
+from kivy.uix.screenmanager import Screen
 
 # Import the StitchCalculator class
 from utils import StitchCalculator
@@ -14,8 +15,9 @@ from utils import StitchCalculator
 # Set the background color to white
 Window.clearcolor = (1, 1, 1, 1)  # RGBA
 
-class StitchNicheApp(App):
-    def build(self):
+class Stitch_Calc(Screen):
+    def __init__(self, **kwargs):
+        super(Stitch_Calc,self).__init__(**kwargs)
         self.sc = StitchCalculator()
         # Main layout for the form
         layout = BoxLayout(orientation='vertical',spacing=30, size_hint=(1, 1))
@@ -40,24 +42,24 @@ class StitchNicheApp(App):
         # Width
         form_layout.add_widget(Label(text="Width (inches):", color=(0.5, 0, 0.5, 1)))
         self.width_input = TextInput(size_hint_y=None, height=25, background_color=(1, 1, 1, 1),
-                                      size_hint_x=0.5)
+                                      size_hint_x=0.5, padding_y = (3,3))
         form_layout.add_widget(self.width_input)
 
         # Length
         form_layout.add_widget(Label(text="Length (inches):", color=(0.5, 0, 0.5, 1)))
         self.length_input = TextInput(size_hint_y=None, height=25, background_color=(1, 1, 1, 1),
-                                       size_hint_x=0.5)
+                                       size_hint_x=0.5, padding_y = (3,3))
         form_layout.add_widget(self.length_input)
 
         # Gauge
         form_layout.add_widget(Label(text="Gauge Width (inches):", color=(0.5, 0, 0.5, 1)))
         self.gauge_width_input = TextInput(size_hint_y=None, height=25, background_color=(1, 1, 1, 1),
-                                            size_hint_x=0.5)
+                                            size_hint_x=0.5, padding_y = (3,3))
         form_layout.add_widget(self.gauge_width_input)
 
         form_layout.add_widget(Label(text="Gauge Length (inches):", color=(0.5, 0, 0.5, 1)))
         self.gauge_length_input = TextInput(size_hint_y=None, height=25, background_color=(1, 1, 1, 1),
-                                             size_hint_x=0.5)
+                                             size_hint_x=0.5, padding_y = (3,3))
         form_layout.add_widget(self.gauge_length_input)
 
         # Pattern Title
@@ -69,7 +71,7 @@ class StitchNicheApp(App):
         for pattern in ["Stitch Multiple", "Stitch Remainder", "Row Multiple", "Row Remainder"]:
             form_layout.add_widget(Label(text=f"{pattern}:", color=(0.5, 0, 0.5, 1)))
             pattern_input = TextInput(size_hint_y=None, height=25, background_color=(1, 1, 1, 1),
-                                      size_hint_x=0.5)
+                                      size_hint_x=0.5, padding_y = (3,3))
             self.pattern_inputs.append(pattern_input)
             form_layout.add_widget(pattern_input)
 
@@ -83,7 +85,7 @@ class StitchNicheApp(App):
         submit_button.bind(on_press=self.submit)
         layout.add_widget(submit_button)
 
-        return layout
+        self.add_widget(layout)
 
     def submit(self, instance):
         # Capture all inputs into a dictionary
@@ -119,5 +121,3 @@ class StitchNicheApp(App):
 
 if __name__ == "__main__":
     StitchNicheApp().run()
-
-
