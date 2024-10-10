@@ -22,25 +22,79 @@ Window.clearcolor = (1, 1, 1, 1)  # RGBA
 class StitchNicheApp(App):
     def build(self):
         self.sc = StitchCalculator()
-        # Main layout for the form
         layout = BoxLayout(orientation='vertical', spacing=30, size_hint=(1, 1))
 
-        # Title
-        # GenerateFormKivy.form({"input 1" : 0.0,
-        #                 "input 2" : "inches",}, styles = )
+
         title_label = Label(text="Stitch Niche", font_size='32sp', color=(0.5, 0, 0.5, 1))
         layout.add_widget(title_label)
 
-        # Sub Title
         title_label = Label(text="Stitch Calculator - Rectangle", font_size='20sp', color=(0.5, 0, 0.5, 1))
         layout.add_widget(title_label)
 
-        # Form layout
+        # form
+        style = Styles(
+            label_color=(0.5, 0, 0.5, 1),
+            header_color = (0.8, 0, 0.1),
+            size_hint=(0.90, None),
+            height=35,
+            background_color=(1, 1, 1, 1),
+            padding=5,
+            spacing=20
+        )
+        input_fields = {
+            "Cast on stitch #:": {                                                                              # header
+                "width_input": (                                                                                # variable associated with input
+                    "Width Input",                                                                              # label text for input
+                    "8.0",                                                                                      # default value
+                    "How wide you want your finished piece to be. Can be entered as a decimal or whole number." # tooltip
+                ),
+                "length_input": (
+                    "Length Input",
+                    "60.0",
+                    "How long you want your finished piece to be. Can be entered as a decimal or whole number."
+                ),
+                "gauge_width_input": (
+                    "Gauge Width Input",
+                    "7.14",
+                    "The ratio of stitches to an inch for your specific pattern worked by you. Calculated by dividing the count of stitches within a section of a row by the width of that section. Can be entered as a decimal or whole number."
+                ),
+                "gauge_length_input": (
+                    "Gauge Length Input",
+                    "6.0",
+                    "The ratio of rows to an inch for your specific pattern worked by you. Calculated by dividing the count of rows within a section of length by the length of the section. Can be entered as a decimal or whole number."
+                )
+            },
+            "Pattern:": {
+                "Stitch Multiple": (
+                    "Stitch Multiple",
+                    "5",
+                    "Based on the constraints your pattern has for casting on, if your pattern calls for working a multiple of x stitches plus y, your stitch_multiple is x. If it doesn’t have any requirements, enter 1. This value is always a whole number."
+                ),
+                "Stitch Remainder": (
+                    "Stitch Remainder",
+                    "0",
+                    "Based on the constraints your pattern has for casting on, if your pattern calls for working a multiple of x stitches plus y, your stitch_remainder is y. If it doesn’t have any requirements or just calls for a multiple x, enter 0. This value is always a whole number."
+                ),
+                "Row Multiple": (
+                    "Row Multiple",
+                    "1",
+                    "Based on whether it matters the row on which you quit your stitch pattern. If your pattern has x rows and calls for repeating rows n through m, then your row_multiple is (m - n + 1). If it does not matter where you end the pattern and bind off, then enter 1. This value is always a whole number."
+                ),
+                "Row Remainder": (
+                    "Row Remainder",
+                    "0",
+                    "Based on whether it matters the row on which you quit your stitch pattern. If your pattern has x rows and calls for repeating rows n through m, then your row_remainder is (x - m + n - 1).  If it does not matter where you end the pattern and bind off, then enter 0. This value is always a whole number."
+                )
+            }
+        }
 
-        style = Styles(label_color=(0.5, 0, 0.5, 1), header_color = (0.8, 0, 0.1), size_hint=(0.90, None), height=35, background_color=(1, 1, 1, 1), padding=5, spacing=20)
-        input_label = {"Cast on stitch #:" : ["width_input", "length_input", "gauge_width_input", "gauge_length_input"], "Pattern:" : ["Stitch Multiple", "Stitch Remainder", "Row Multiple", "Row Remainder"]}
         gen = GenerateWidgets()
-        layout, text_inputs, self.result_label = gen.generate_number_form(cols = 2, layout = layout, labels = input_label, styles=style, submit_handler=self.submit)
+        layout, text_inputs, self.result_label = gen.generate_number_form(
+            layout = layout,
+            input_fields = input_fields,
+            styles=style,
+            submit_handler=self.submit,
+        )
         self.width_input = text_inputs['width_input']
         self.length_input = text_inputs['length_input']
         self.gauge_width_input = text_inputs['gauge_width_input']
