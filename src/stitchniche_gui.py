@@ -119,5 +119,10 @@ class Stitch_Calc(Screen):
 
         self.result_label.text = str(result);
 
+class StitchNicheApp(App):
+    def build(self):
+        return Stitch_Calc()
+
+
 if __name__ == "__main__":
     StitchNicheApp().run()
