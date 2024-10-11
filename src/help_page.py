@@ -5,6 +5,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.gridlayout import GridLayout
+from kivymd.uix.toolbar import MDTopAppBar
 from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle
 
@@ -13,7 +14,16 @@ Window.clearcolor = (1, 1, 1, 1)
 class HelpCenterScreen(Screen):
     def __init__(self, **kwargs):
         super(HelpCenterScreen, self).__init__(**kwargs)
+        from homePage import NavDrawer
+
         layout = BoxLayout(orientation='vertical', padding=10, spacing=20)
+
+        nav_drawer = NavDrawer(self)
+        # nav_bar handles nav_drawer
+        nav_bar = MDTopAppBar(title="StitchNiche Help Center",md_bg_color=(0.5, 0, 0.5, 1))
+        # opens nav_drawer on click
+        nav_bar.left_action_items = [["menu", lambda x: nav_drawer.set_state("toggle")]]
+        layout.add_widget(nav_bar)
 
         # Adjusting banner size
         banner = BoxLayout(size_hint=(1, 0.15))
@@ -44,7 +54,13 @@ class HelpCenterScreen(Screen):
         layout.add_widget(scroll_view)
 
         self.add_widget(layout)
-
+        self.add_widget(nav_drawer)
+    def calc_screen(self, *args):
+        self.manager.current='stitch_calc'
+    def help_screen(self, *args):
+        self.manager.current='help'
+    def home_screen(self, *args):
+        self.manager.current='home'
     def load_pattern(self, filename):
         # Switch to the pattern screen and load content from the selected file
         self.manager.current = 'pattern'
@@ -114,7 +130,7 @@ class StitchNicheApp(App):
     def build(self):
         sm = ScreenManager()
         sm.add_widget(HelpCenterScreen(name='help'))
-        sm.add_widget(PatternScreen(name='pattern'))
+        sm.add_widget(PatternScreen(name='pattern'))      
         return sm
 
 if __name__ == '__main__':
