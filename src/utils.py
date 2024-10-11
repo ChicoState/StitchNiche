@@ -10,6 +10,7 @@ from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
+from kivy.core.window import Window
 
 class StitchCalculator():
     def __init__(self):
@@ -111,32 +112,69 @@ class Styles:
         self.padding = padding
         self.spacing = spacing
 
-
 class GenerateWidgets:
     def __init__(self):
         pass
 
-    # Create a form
-    # labels is a dictionary like {"input1" : 0.0}, first being the label, second being the type
-    def generate_number_form(self, cols, labels, styles, layout, submit_handler):
+    def generate_number_form(self, input_fields, styles, layout, submit_handler):
         scroll_view = ScrollView(size_hint=(1, 6))
-        form_layout = GridLayout(cols=cols, padding=styles.padding, spacing=styles.spacing, size_hint_y=None)
-        form_layout.bind(minimum_height=form_layout.setter('height'))  # Adjust the height to fit content dynamically
+        form_layout = GridLayout(cols=3, padding=styles.padding, spacing=[styles.spacing, 10], size_hint_y=None)
+        form_layout.bind(minimum_height=form_layout.setter('height'))  # Adjust height dynamically
 
         text_inputs = {}
-        for key, value in labels.items():
-            form_layout.add_widget(Label(text=key, color=styles.header_color))
-            form_layout.add_widget(Label())
-            for name in value:
-                form_layout.add_widget(Label(text=name, color=styles.label_color))
-                text_inputs[name] = TextInput(size_hint=styles.size_hint, height=styles.height,
-                                              background_color=styles.background_color)
-                form_layout.add_widget(text_inputs[name])
+        tooltips = []
+
+        def calculate_tooltip_width():
+            return Window.width * 0.25
+
+        for header, fields in input_fields.items():
+            # Add header label spanning all columns
+            header_label = Label(text=header, color=styles.header_color, size_hint=(1, None), height=styles.height)
+            form_layout.add_widget(header_label)
+            form_layout.add_widget(Label())  # Empty for alignment
+            form_layout.add_widget(Label())  # Empty for alignment
+
+            for field_name, (label_text, default_value, tooltip_text) in fields.items():
+                form_layout.add_widget(Label(text=label_text, color=styles.label_color, size_hint=(0.2, None), height=styles.height))
+
+                text_input = TextInput(size_hint=(0.4, None), height=styles.height,
+                                       background_color=styles.background_color, text=str(default_value))
+                text_inputs[field_name] = text_input
+                form_layout.add_widget(text_input)
+
+                tooltip_label = Label(
+                    text=tooltip_text,
+                    color=styles.label_color,
+                    size_hint=(None, None),
+                    halign='left',
+                    valign='middle',
+                    text_size=(calculate_tooltip_width(), None),
+                    width=calculate_tooltip_width(),
+                    height=styles.height
+                )
+                tooltip_label.opacity = 0
+                form_layout.add_widget(tooltip_label)
+
+                tooltips.append(tooltip_label)
+
+                text_input.bind(focus=lambda instance, value, tooltip=tooltip_label: setattr(tooltip, 'opacity', 1 if value else 0))
+
+
+        def update_tooltips(*args):
+            for tooltip in tooltips:
+                new_width = calculate_tooltip_width()
+                tooltip.width = new_width
+                tooltip.text_size = (new_width, None)
+
+
+        Window.bind(on_resize=update_tooltips)
 
         scroll_view.add_widget(form_layout)
         layout.add_widget(scroll_view)
+
         result = Label(text="Result", color=styles.header_color)
         layout.add_widget(result)
+
         submit_button = Button(text="Submit", size_hint=styles.size_hint, height=styles.height,
                                background_color=styles.background_color)
         submit_button.bind(on_press=submit_handler)
