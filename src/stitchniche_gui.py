@@ -7,10 +7,15 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
-from kivy.uix.screenmanager import Screen
+from kivymd.uix.navigationdrawer import MDNavigationDrawer
+from kivymd.uix.toolbar import MDTopAppBar
+from kivy.uix.screenmanager import ScreenManager, Screen
+from kivymd.uix.navigationdrawer import MDNavigationDrawer
+from kivymd.app import MDApp
 
 # Import the StitchCalculator class
 from utils import StitchCalculator
+from help_page import HelpCenterScreen
 
 # Set the background color to white
 Window.clearcolor = (1, 1, 1, 1)  # RGBA
@@ -18,13 +23,21 @@ Window.clearcolor = (1, 1, 1, 1)  # RGBA
 class Stitch_Calc(Screen):
     def __init__(self, **kwargs):
         super(Stitch_Calc,self).__init__(**kwargs)
+        from homePage import NavDrawer # placing imports here avoid circular dependencies 
         self.sc = StitchCalculator()
         # Main layout for the form
         layout = BoxLayout(orientation='vertical',spacing=30, size_hint=(1, 1))
+
+        nav_drawer = NavDrawer(self)
+        # nav_bar handles nav_drawer
+        nav_bar = MDTopAppBar(title="Rectangle Calculator",md_bg_color=(0.5, 0, 0.5, 1))
+        # opens nav_drawer on click
+        nav_bar.left_action_items = [["menu", lambda x: nav_drawer.set_state("toggle")]]
+        layout.add_widget(nav_bar)
         
         # Title
         #GenerateFormKivy.form({"input 1" : 0.0, "input 2" : "inches",}, styles = )
-        title_label = Label(text="Stitch Niche", font_size='32sp', color=(0.5, 0, 0.5, 1))
+        title_label = Label(text="Rectangle Calculator", font_size='32sp', color=(0.5, 0, 0.5, 1))
         layout.add_widget(title_label)
 
         # Sub Title
@@ -86,6 +99,7 @@ class Stitch_Calc(Screen):
         layout.add_widget(submit_button)
 
         self.add_widget(layout)
+        self.add_widget(nav_drawer)
 
     def submit(self, instance):
         # Capture all inputs into a dictionary
@@ -118,10 +132,26 @@ class Stitch_Calc(Screen):
 
 
         self.result_label.text = str(result);
+    
+    def calc_screen(self, *args):
+        self.manager.current='stitch_calc'
+    def help_screen(self, *args):
+        self.manager.current='help'
+    def home_screen(self, *args):
+        self.manager.current = 'home'
 
-class StitchNicheApp(App):
+class Screens(ScreenManager):
+    def __init__(self, **kwargs):
+        super(Screens, self).__init__(**kwargs)
+        # first Screen added is set as the current Screen
+        self.add_widget(Home(name='home'))
+        self.add_widget(Stitch_Calc(name='stitch_calc'))
+        self.add_widget(HelpCenterScreen(name='help'))
+        self.add_widget(PatternScreen(name='pattern'))
+class StitchNicheApp(MDApp):
     def build(self):
-        return Stitch_Calc()
+        # return Stitch_Calc()
+        return Screens()
 
 
 if __name__ == "__main__":
