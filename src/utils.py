@@ -181,3 +181,23 @@ class GenerateWidgets:
         layout.add_widget(submit_button)
 
         return layout, text_inputs, result
+
+class StitchPattern:
+    def __init__(self, stitch_multiple, stitch_remainder, row_multiple, row_remainder):
+        self.smul = stitch_multiple
+        self.srem = stitch_remainder
+        self.rmul = row_multiple
+        self.rrem = row_remainder
+
+    def encode(self):
+        pass
+
+    def save(self):
+        pass
+
+    def load(self):
+        pass
+
+class PatternVisualizer:
+    def __init__(self):
+        pass;
