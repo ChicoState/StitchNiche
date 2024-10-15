@@ -55,12 +55,16 @@ class HelpCenterScreen(Screen):
 
         self.add_widget(layout)
         self.add_widget(nav_drawer)
+        
     def calc_screen(self, *args):
         self.manager.current='stitch_calc'
     def help_screen(self, *args):
         self.manager.current='help'
     def home_screen(self, *args):
         self.manager.current='home'
+    def visual_screen(self, *args):
+        self.manager.current='visualizer'
+
     def load_pattern(self, filename):
         # Switch to the pattern screen and load content from the selected file
         self.manager.current = 'pattern'

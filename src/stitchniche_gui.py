@@ -139,15 +139,15 @@ class Stitch_Calc(Screen):
         self.manager.current='help'
     def home_screen(self, *args):
         self.manager.current = 'home'
+    def visual_screen(self, *args):
+        self.manager.current='visualizer'
 
 class Screens(ScreenManager):
     def __init__(self, **kwargs):
         super(Screens, self).__init__(**kwargs)
         # first Screen added is set as the current Screen
-        self.add_widget(Home(name='home'))
         self.add_widget(Stitch_Calc(name='stitch_calc'))
         self.add_widget(HelpCenterScreen(name='help'))
-        self.add_widget(PatternScreen(name='pattern'))
 class StitchNicheApp(MDApp):
     def build(self):
         # return Stitch_Calc()
