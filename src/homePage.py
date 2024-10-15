@@ -10,6 +10,7 @@ from kivymd.app import MDApp
 from kivymd.uix.list import OneLineIconListItem, IconLeftWidget
 from help_page import HelpCenterScreen, PatternScreen
 from stitchniche_gui import Stitch_Calc
+from patternVisualizerPage import PatternVisuals
 
 # Set the background color to white
 Window.clearcolor = (1, 1, 1, 1)  # RGBA
@@ -33,6 +34,9 @@ def NavDrawer(s):
     nav_layout.add_widget(list)
 
     list = MakeList("Calculator", "calculator",s.calc_screen)
+    nav_layout.add_widget(list)
+
+    list = MakeList("Visualizer", "eye-outline",s.visual_screen)
     nav_layout.add_widget(list)
     # end of items in nav_drawer
 
@@ -77,6 +81,8 @@ class Home(Screen):
         self.manager.current='help'
     def home_screen(self, *args):
         self.manager.current='home'
+    def visual_screen(self, *args):
+        self.manager.current='visualizer'
 
 """ in order to create a new Screen you need to (in a new .py file):
         1. include
@@ -101,6 +107,7 @@ class Screens(ScreenManager):
         self.add_widget(Stitch_Calc(name='stitch_calc'))
         self.add_widget(HelpCenterScreen(name='help'))
         self.add_widget(PatternScreen(name='pattern'))
+        self.add_widget(PatternVisuals(name='visualizer'))
 
 class StitchNicheApp(MDApp):
     def build(self):
