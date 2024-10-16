@@ -83,7 +83,7 @@ class GenerateWidgets:
     def generate_number_form(self, input_fields, styles, layout, submit_handler):
         scroll_view = ScrollView(size_hint=(1, 6))
         form_layout = GridLayout(cols=3, padding=styles.padding, spacing=[styles.spacing, 10], size_hint_y=None)
-        form_layout.bind(minimum_height=form_layout.setter('height'))  # Adjust height dynamically
+        form_layout.bind(minimum_height=form_layout.setter('height'))
 
         text_inputs = {}
         tooltips = []
@@ -92,7 +92,6 @@ class GenerateWidgets:
             return Window.width * 0.25
 
         for header, fields in input_fields.items():
-            # Add header label spanning all columns
             header_label = Label(text=header, color=styles.header_color, size_hint=(1, None), height=styles.height)
             form_layout.add_widget(header_label)
             form_layout.add_widget(Label())  # Empty for alignment
@@ -101,7 +100,7 @@ class GenerateWidgets:
             for field_name, (label_text, default_value, tooltip_text) in fields.items():
                 form_layout.add_widget(Label(text=label_text, color=styles.label_color, size_hint=(0.2, None), height=styles.height))
 
-                text_input = TextInput(size_hint=(0.4, None), height=styles.height,
+                text_input = TextInput(size_hint=(1, None), height=styles.height,
                                        background_color=styles.background_color, text=str(default_value))
                 text_inputs[field_name] = text_input
                 form_layout.add_widget(text_input)
