@@ -1,0 +1,42 @@
+Rectangle Pattern Calculator:
+
+This tool is designed to help you achieve a knitted or crocheted rectangle (worked from bottom up) as close to your desired size as possible. Examples of projects it can help with include scarfs, washcloths, blankets, shawls, or just panels of a larger project. It works within the restrictions of the stitch pattern you are using so that your project doesn't end at an awkward point, but is as symmetrical as you desire.
+
+Measurement Information Needed:
+
+width: How wide you want your finished piece to be. Can be entered as a decimal or whole number
+
+length: How long you want your finished piece to be. Can be entered as a decimal or whole number
+
+gauge_width: The ratio of stitches to an inch for your specific pattern worked by you. Calculated by dividing the count of stitches within a section of a row by the width of that section. Can be entered as a decimal or whole number
+
+gauge_length: The ratio of rows to an inch for your specific pattern worked by you. Calculated by dividing the count of rows within a section of length by the length of the section. Can be entered as a decimal or whole number
+
+Pattern Information Needed
+
+stitch_multiple: Based on the constraints your pattern has for casting on, if your pattern calls for working a multiple of x stitches plus y, your stitch_multiple is x. If it doesn’t have any requirements, enter 1. This value is always a whole number.
+
+stitch_remainder: Based on the constraints your pattern has for casting on, if your pattern calls for working a multiple of x stitches plus y, your stitch_remainder is y. If it doesn’t have any requirements or just calls for a multiple x, enter 0. This value is always a whole number.
+
+row_multiple: Based on whether it matters the row on which you quit your stitch pattern. If your pattern has x rows and calls for repeating rows n through m, then your row_multiple is (m - n + 1). If it does not matter where you end the pattern and bind off, then enter 1. This value is always a whole number
+
+row_remainder: Based on whether it matters the row on which you quit your stitch pattern. If your pattern has x rows and calls for repeating rows n through m, then your row_remainder is (x - m + n - 1).  If it does not matter where you end the pattern and bind off, then enter 0. This value is always a whole number.
+
+
+Example of using the Rectangle Calculator with real numbers:
+Suppose you are wanting to make a scarf of width 8 in and length 60 inches.
+
+This is your pattern:
+Work a multiple of 5 stitches
+Row 1: Repeat (K3, P2) across
+Row 2: Repeat (K2, P3) across
+Repeat Rows 1 and 2 for pattern
+
+For width you enter 8, and for length you enter 60. 
+
+To find your gauges you work a small swatch 25 stitches wide and 18 rows long. Your swatch is about 3.5 inches wide and 3 inches long. For gauge_length, you enter 7.14, which is 25/3.5 rounded to the second decimal place. For gauge_width, you enter 6 which is 18/3.
+
+Since the pattern calls for a multiple of 5 and does specify any extra stitches, you enter 5 for stitch_multiple and 0 for stitch_remainder.
+
+While the pattern does have you repeat Rows 1 through 2, this particular stitch will not look different no matter where you stop so you enter row_multiple = 1 and row_remainder = 0, since it doesn’t really matter which row you end on.
+
