@@ -111,14 +111,16 @@ class Stitch_Calc(Screen):
             "Patterns": {f"Pattern {chr(65+i)}": input_field.text for i, input_field in enumerate(self.pattern_inputs)}
         }
 
+        self.sc.setpattern(float(self.pattern_inputs[0].text), #Sets Pattern restrictions for stitch calculator
+                     float(self.pattern_inputs[1].text),
+                     float(self.pattern_inputs[2].text),
+                     float(self.pattern_inputs[3].text),)
+        
         result = self.sc.rectangle_calculator(float(self.width_input.text),
                      float(self.length_input.text),
                      float(self.gauge_width_input.text),
                      float(self.gauge_length_input.text),
-                     float(self.pattern_inputs[0].text),
-                     float(self.pattern_inputs[1].text),
-                     float(self.pattern_inputs[2].text),
-                     float(self.pattern_inputs[3].text),)
+                     )
 
         # Print or process the outputs as needed (for demonstration)
         print(outputs)  # You can remove this line later
