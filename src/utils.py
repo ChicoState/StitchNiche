@@ -29,7 +29,7 @@ class StitchCalculator():
         (self, stitch_multiple, stitch_remainder, row_multiple, row_remainder)
         
         """
-        pattern = StitchPattern()
+        self.pattern = StitchPattern()
         pass
 
 # arguments: string userIn, string mode
@@ -78,7 +78,6 @@ class StitchCalculator():
         Parameter gauge_w: the number of stitches per inch
         Precondition: gauge is a float > 0
 
-        :return: (number of stitches to cast on: integer, number of rows to complete: integer)
         """
         stitches = self.one_dim_calculator(width, gauge_w, True)
         rows = self.one_dim_calculator(length, gauge_l, False)
