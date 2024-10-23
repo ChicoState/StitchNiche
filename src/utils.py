@@ -5,6 +5,8 @@ stitch_calculator is responsible for all mathematics done with stitches
 """
 import re
 
+import numpy
+
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
@@ -13,7 +15,20 @@ from kivy.uix.button import Button
 from kivy.core.window import Window
 
 class StitchCalculator():
-    def __init__(self):
+    def __init__(self, stitch_multiple, stitch_remainder, row_multiple, row_remainder):
+        """
+        Initializes pattern constraint information
+        Parameter s_multiple: a pattern constraint (stitch_multiple)
+        Precondition: s_multiple is a integer >= 1
+        Parameter s_remainder: a pattern constraint (stitch_remainder)
+        Precondition: s_remainder is an integer >= 0
+        Parameter r_multiple: a pattern constraint (row_multiple)
+        Precondition: r_multiple is a integer >= 1
+        Parameter r_remainder: a pattern constraint (row_remainder)
+        Precondition: r_remainder is an integer >= 0
+        
+        """
+        pattern = StitchPattern(stitch_multiple, stitch_remainder, row_multiple, row_remainder)
         pass
 
 # arguments: string userIn, string mode
@@ -46,7 +61,7 @@ class StitchCalculator():
 
         return isValid
 
-    def rectangle_calculator(self, width, length, gauge_l, gauge_w, s_multiple, s_remainder, r_multiple, r_remainder ):
+    def rectangle_calculator(self, width, length, gauge_l, gauge_w):
         """
         Calculates the number stitches to cast on and rows to complete to make a rectangle of size width * length,
         while fitting the pattern constraints
@@ -59,21 +74,14 @@ class StitchCalculator():
         Precondition: gauge is a float > 0
         Parameter gauge_w: the number of stitches per inch
         Precondition: gauge is a float > 0
-        Parameter s_multiple: a pattern constraint (stitch_multiple)
-        Precondition: s_multiple is a integer >= 1
-        Parameter s_remainder: a pattern constraint (stitch_remainder)
-        Precondition: s_remainder is an integer >= 0
-        Parameter r_multiple: a pattern constraint (row_multiple)
-        Precondition: r_multiple is a integer >= 1
-        Parameter r_remainder: a pattern constraint (row_remainder)
-        Precondition: r_remainder is an integer >= 0
+
         :return: (number of stitches to cast on: integer, number of rows to complete: integer)
         """
-        stitches = self.one_dim_calculator(width, gauge_w, s_multiple, s_remainder)
-        rows = self.one_dim_calculator(length, gauge_l, r_multiple, r_remainder)
+        stitches = self.one_dim_calculator(width, gauge_w, True)
+        rows = self.one_dim_calculator(length, gauge_l, False)
         return (stitches, rows)
 
-    def one_dim_calculator(self, x, gauge, multiple , remainder):
+    def one_dim_calculator(self, x, gauge, widthwise):
         """
         Finds the number of rows/stitches that will be closest in size to x while fitting pattern constraints:
         being equal to  n*multiple + remainder for some natural number, n
@@ -82,12 +90,15 @@ class StitchCalculator():
         Precondition: x is a float > 0
         Parameter gauge: the number of stitches/rows per inch
         Precondition: gauge is a float > 0
-        Parameter multiple: a pattern constraint
-        Precondition: multiple is a integer >= 1
-        Parameter remainder: a pattern constraint
-        Precondition: remainder is an integer >= 0
-        :return: integer best fit for stitch/row number to be x wide/long 
+        Parameter: widthwise is true if finding the number of stitches, not number of rows 
         """
+        if (widthwise):
+            multiple = self.pattern.smul
+            remainder = self.pattern.srem
+        else :
+            multiple = self.pattern.rmul
+            remainder = self.pattern.rrem
+
         estimate = int(x * gauge)
         difference = (estimate -  remainder)% multiple
         if difference == 0:
@@ -101,6 +112,39 @@ class StitchCalculator():
                 return option1
             else:
                 return option2
+    def change_width_calculator(self, starting_width, ending_width, length, gauge_l, gauge_w) :
+        caston = self.one_dim_calculator(starting_width, gauge_w, True)
+        castoff =  self.one_dim_calculator(ending_width, gauge_w, True)
+        rownum = self.one_dim_calculator(length, gauge_l, False)
+
+        numchanges = abs(castoff - caston) // self.pattern.smul
+
+        rows = numpy.zeros(rownum)
+
+        rows = self.distribute_change(rows, numchanges)
+        rows *= self.pattern.smul
+
+        return (caston, castoff, rows)
+
+
+    def distribute_change(self, rows, numchanges) :
+       """
+       Evenly distributes increases and decreases through out the rows of a pattern
+       """
+       size = rows.size()
+       if (numchanges >= size) :
+            m = numchanges // size
+            rows += m
+            numchanges %= size
+            
+        n = size // numchanges
+        for i in range(0, rows.size(), n)
+            rows[i] +=1
+        return rows
+
+
+        
+
 
 class Styles:
     def __init__(self, label_color, header_color, size_hint, height, background_color, padding, spacing):
