@@ -15,7 +15,7 @@ from kivy.uix.button import Button
 from kivy.core.window import Window
 
 class StitchCalculator():
-    def __init__(self, stitch_multiple, stitch_remainder, row_multiple, row_remainder):
+    def __init__(self):
         """
         Initializes pattern constraint information
         Parameter s_multiple: a pattern constraint (stitch_multiple)
@@ -26,14 +26,17 @@ class StitchCalculator():
         Precondition: r_multiple is a integer >= 1
         Parameter r_remainder: a pattern constraint (row_remainder)
         Precondition: r_remainder is an integer >= 0
+        (self, stitch_multiple, stitch_remainder, row_multiple, row_remainder)
         
         """
-        pattern = StitchPattern(stitch_multiple, stitch_remainder, row_multiple, row_remainder)
+        pattern = StitchPattern()
         pass
 
 # arguments: string userIn, string mode
 #            mode should be either "int" or "float" depending on which should be checked
 # return: boolean, True means string is valid
+    def setpattern(self, stitch_multiple, stitch_remainder, row_multiple, row_remainder) :
+        self.pattern.setpattern(stitch_multiple, stitch_remainder, row_multiple, row_remainder)
 
     def isValid(self, userIn, mode):
         isValid = True
@@ -138,7 +141,7 @@ class StitchCalculator():
             numchanges %= size
             
         n = size // numchanges
-        for i in range(0, rows.size(), n)
+        for i in range(0, rows.size(), n) :
             rows[i] +=1
         return rows
 
@@ -228,11 +231,15 @@ class GenerateWidgets:
 
 class StitchPattern:
     def __init__(self, stitch_multiple, stitch_remainder, row_multiple, row_remainder):
+        self.smul = 1
+        self.srem = 0
+        self.rmul = 1
+        self.rrem = 0
+    def setpattern(self, stitch_multiple, stitch_remainder, row_multiple, row_remainder):
         self.smul = stitch_multiple
         self.srem = stitch_remainder
         self.rmul = row_multiple
         self.rrem = row_remainder
-
     def encode(self):
         pass
 
