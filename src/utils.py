@@ -189,13 +189,20 @@ class StitchPattern:
         self.rmul = row_multiple
         self.rrem = row_remainder
 
+
     # stitches - columns
     # all vars must be natural numbers
     # smul, srem - s % smul = srem
     # rmul, rrem - r % rmul = rem
     # array: size = (smul*x + srem) * (rmul*y + rrem)
-    def encode(self):
-        pass
+    def encode(self, rows=10, columns=10):
+        matrix = [["~" for x in range(columns)] for y in range(rows)]
+        for i in range(rows):
+            for j in range(columns):
+                print(matrix[i][j], end='')
+            print("")
+        return matrix
+
 
     def save(self):
         pass
