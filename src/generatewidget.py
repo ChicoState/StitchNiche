@@ -143,5 +143,3 @@ class  StitchNicheApp(App):
 
 if __name__ == "__main__":
     StitchNicheApp().run()
-
-

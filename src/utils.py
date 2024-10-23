@@ -134,7 +134,7 @@ class GenerateWidgets:
             form_layout.add_widget(Label())  # Empty for alignment
 
             for field_name, (label_text, default_value, tooltip_text) in fields.items():
-                form_layout.add_widget(Label(text=label_text, color=styles.label_color, size_hint=(0.2, None), height=styles.height))
+                form_layout.add_widget(Label(text=label_text, color=styles.label_color, size_hint=(1, None), height=styles.height))
 
                 text_input = TextInput(size_hint=(1, None), height=styles.height,
                                        background_color=styles.background_color, text=str(default_value))
