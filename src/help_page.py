@@ -8,6 +8,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivymd.uix.toolbar import MDTopAppBar
 from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle
+from kivymd.app import MDApp
 
 Window.clearcolor = (1, 1, 1, 1)
 
@@ -130,7 +131,7 @@ class PatternScreen(Screen):
         return line_height * content.count('\n') + 40
     
 
-class StitchNicheApp(App):
+class StitchNicheApp(MDApp):
     def build(self):
         sm = ScreenManager()
         sm.add_widget(HelpCenterScreen(name='help'))
