@@ -226,12 +226,6 @@ class GenerateWidgets:
 
         return layout, text_inputs, result
 
-class StitchPattern:
-    def __init__(self, stitch_multiple, stitch_remainder, row_multiple, row_remainder):
-        self.smul = stitch_multiple
-        self.srem = stitch_remainder
-        self.rmul = row_multiple
-        self.rrem = row_remainder
 
 
     # stitches - columns
@@ -239,16 +233,27 @@ class StitchPattern:
     # smul, srem - s % smul = srem
     # rmul, rrem - r % rmul = rem
     # array: size = (smul*x + srem) * (rmul*y + rrem)
-    def encode(self, rows=10, columns=10):
-        matrix = [["~" for x in range(columns)] for y in range(rows)]
+class StitchPattern:
+    def __init__(self, stitch_multiple, stitch_remainder, row_multiple, row_remainder):
+        self.smul = stitch_multiple
+        self.srem = stitch_remainder
+        self.rmul = row_multiple
+        self.rrem = row_remainder
+
+    def encode(self, matrix, rows=10, columns=10):
+
+        string = str(self.smul) + " " + str(self.srem) + " " + str(self.rmul) + " " + str(self.rrem) + "\n"
         for i in range(rows):
             for j in range(columns):
-                print(matrix[i][j], end='')
-            print("")
+                string += matrix[i][j] + " "
+            string += "\n"
+
+        print(string)
         return matrix
 
 
     def save(self):
+
         pass
 
     def load(self):
