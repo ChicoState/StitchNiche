@@ -234,6 +234,13 @@ class StitchPattern:
         self.srem = stitch_remainder
         self.rmul = row_multiple
         self.rrem = row_remainder
+
+    def setpattern(self, stitch_multiple = 1, stitch_remainder = 0, row_multiple = 1, row_remainder = 0):
+        self.smul = stitch_multiple
+        self.srem = stitch_remainder
+        self.rmul = row_multiple
+        self.rrem = row_remainder
+
     def encode(self):
         pass
 
