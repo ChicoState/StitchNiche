@@ -139,10 +139,10 @@ class StitchCalculator():
             rows += m
             numchanges %= size
             
-        n = size // numchanges
-        for i in range(0, rows.size(), n) :
+       n = size // numchanges
+       for i in range(0, rows.size(), n) :
             rows[i] +=1
-        return rows
+       return rows
 
 
         
@@ -229,16 +229,18 @@ class GenerateWidgets:
         return layout, text_inputs, result
 
 class StitchPattern:
-    def __init__(self, stitch_multiple, stitch_remainder, row_multiple, row_remainder):
-        self.smul = 1
-        self.srem = 0
-        self.rmul = 1
-        self.rrem = 0
-    def setpattern(self, stitch_multiple, stitch_remainder, row_multiple, row_remainder):
+    def __init__(self, stitch_multiple = 1, stitch_remainder = 0, row_multiple = 1, row_remainder = 0):
         self.smul = stitch_multiple
         self.srem = stitch_remainder
         self.rmul = row_multiple
         self.rrem = row_remainder
+
+    def setpattern(self, stitch_multiple = 1, stitch_remainder = 0, row_multiple = 1, row_remainder = 0):
+        self.smul = stitch_multiple
+        self.srem = stitch_remainder
+        self.rmul = row_multiple
+        self.rrem = row_remainder
+
     def encode(self):
         pass
 
