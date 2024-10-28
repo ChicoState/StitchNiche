@@ -248,15 +248,15 @@ class StitchPattern:
         self.rmul = row_multiple
         self.rrem = row_remainder
 
+    # input : 2d list   output: 2d list
     def encode(self, matrix, rows=10, columns=10):
 
-        string = str(self.smul) + " " + str(self.srem) + " " + str(self.rmul) + " " + str(self.rrem) + "\n"
+        string = str(self.smul) + "," + str(self.srem) + "," + str(self.rmul) + "," + str(self.rrem) + "\n"
         for i in range(rows):
-            for j in range(columns):
-                string += matrix[i][j] + " "
-            string += "\n"
+            row = ",".join(str(matrix[i][j]) for j in range(columns))
+            string += row + "\n"
+        string = string.rstrip("\n")
 
-        print(string)
         return matrix
 
 
