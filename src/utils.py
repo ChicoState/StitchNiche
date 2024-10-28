@@ -15,7 +15,7 @@ from kivy.uix.button import Button
 from kivy.core.window import Window
 
 class StitchCalculator():
-    def __init__(self, stitch_multiple, stitch_remainder, row_multiple, row_remainder):
+    def __init__(self):
         """
         Initializes pattern constraint information
         Parameter s_multiple: a pattern constraint (stitch_multiple)
@@ -26,14 +26,17 @@ class StitchCalculator():
         Precondition: r_multiple is a integer >= 1
         Parameter r_remainder: a pattern constraint (row_remainder)
         Precondition: r_remainder is an integer >= 0
+        (self, stitch_multiple, stitch_remainder, row_multiple, row_remainder)
         
         """
-        pattern = StitchPattern(stitch_multiple, stitch_remainder, row_multiple, row_remainder)
+        self.pattern = StitchPattern()
         pass
 
 # arguments: string userIn, string mode
 #            mode should be either "int" or "float" depending on which should be checked
 # return: boolean, True means string is valid
+    def setpattern(self, stitch_multiple, stitch_remainder, row_multiple, row_remainder) :
+        self.pattern.setpattern(stitch_multiple, stitch_remainder, row_multiple, row_remainder)
 
     def isValid(self, userIn, mode):
         isValid = True
@@ -75,7 +78,6 @@ class StitchCalculator():
         Parameter gauge_w: the number of stitches per inch
         Precondition: gauge is a float > 0
 
-        :return: (number of stitches to cast on: integer, number of rows to complete: integer)
         """
         stitches = self.one_dim_calculator(width, gauge_w, True)
         rows = self.one_dim_calculator(length, gauge_l, False)
@@ -137,10 +139,10 @@ class StitchCalculator():
             rows += m
             numchanges %= size
             
-        n = size // numchanges
-        for i in range(0, rows.size(), n)
+       n = size // numchanges
+       for i in range(0, rows.size(), n) :
             rows[i] +=1
-        return rows
+       return rows
 
 
         
@@ -234,7 +236,13 @@ class GenerateWidgets:
     # rmul, rrem - r % rmul = rem
     # array: size = (smul*x + srem) * (rmul*y + rrem)
 class StitchPattern:
-    def __init__(self, stitch_multiple, stitch_remainder, row_multiple, row_remainder):
+    def __init__(self, stitch_multiple = 1, stitch_remainder = 0, row_multiple = 1, row_remainder = 0):
+        self.smul = stitch_multiple
+        self.srem = stitch_remainder
+        self.rmul = row_multiple
+        self.rrem = row_remainder
+
+    def setpattern(self, stitch_multiple = 1, stitch_remainder = 0, row_multiple = 1, row_remainder = 0):
         self.smul = stitch_multiple
         self.srem = stitch_remainder
         self.rmul = row_multiple
