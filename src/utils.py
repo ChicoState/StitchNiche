@@ -128,18 +128,17 @@ class StitchCalculator():
 
 
     def distribute_change(self, rows, numchanges) :
-       """
-       Evenly distributes increases and decreases through out the rows of a pattern
-       """
-       size = rows.size()
-       if (numchanges >= size) :
+        """
+        Evenly distributes increases and decreases through out the rows of a pattern
+        """
+        size = rows.size()
+        if (numchanges >= size) :
             m = numchanges // size
             rows += m
             numchanges %= size
-            
-        n = size // numchanges
-        for i in range(0, rows.size(), n)
-            rows[i] +=1
+            n = size // numchanges
+        for i in range(0, rows.size(), n):
+            rows[i] += 1
         return rows
 
 
@@ -232,14 +231,31 @@ class StitchPattern:
         self.rmul = row_multiple
         self.rrem = row_remainder
 
-    def encode(self):
+    # private, takes in 2d array and returns encoded string to be saved in a file
+    def encode(self, pattern):
         pass
 
-    def save(self):
+
+    # private, takes in encoded string and returns decoded 2d array
+    def decode(self, pattern):
         pass
 
-    def load(self):
-        pass
+
+    # public, takes in 2d array pattern and passes to encoder to be saved as string in file
+    def save(self, id, pattern):
+        try:
+            with open(id+".txt", "w") as file:
+                file.write(self.encode(pattern))
+        except Exception as e:
+            print("ERROR: ", e)
+
+    # public, takes in id and returns 2d array from file
+    def load(self, id):
+        try:
+            with open(id + ".txt", "r") as file:
+                return self.decode(file.read())
+        except Exception as e:
+            print("ERROR: ", e)
 
 class PatternVisualizer:
     def __init__(self):
