@@ -259,7 +259,6 @@ class StitchPattern:
 
         return matrix
 
-
     def save(self):
 
         pass
