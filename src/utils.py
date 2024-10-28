@@ -228,6 +228,13 @@ class GenerateWidgets:
 
         return layout, text_inputs, result
 
+
+
+    # stitches - columns
+    # all vars must be natural numbers
+    # smul, srem - s % smul = srem
+    # rmul, rrem - r % rmul = rem
+    # array: size = (smul*x + srem) * (rmul*y + rrem)
 class StitchPattern:
     def __init__(self, stitch_multiple = 1, stitch_remainder = 0, row_multiple = 1, row_remainder = 0):
         self.smul = stitch_multiple
@@ -241,10 +248,19 @@ class StitchPattern:
         self.rmul = row_multiple
         self.rrem = row_remainder
 
-    def encode(self):
-        pass
+    # input : 2d list   output: 2d list
+    def encode(self, matrix, rows=10, columns=10):
+
+        string = str(self.smul) + "," + str(self.srem) + "," + str(self.rmul) + "," + str(self.rrem) + "\n"
+        for i in range(rows):
+            row = ",".join(str(matrix[i][j]) for j in range(columns))
+            string += row + "\n"
+        string = string.rstrip("\n")
+
+        return matrix
 
     def save(self):
+
         pass
 
     def load(self):
