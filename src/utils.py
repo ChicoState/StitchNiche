@@ -130,19 +130,18 @@ class StitchCalculator():
 
 
     def distribute_change(self, rows, numchanges) :
-       """
-       Evenly distributes increases and decreases through out the rows of a pattern
-       """
-       size = rows.size()
-       if (numchanges >= size) :
+        """
+        Evenly distributes increases and decreases through out the rows of a pattern
+        """
+        size = rows.size()
+        if (numchanges >= size) :
             m = numchanges // size
             rows += m
             numchanges %= size
-            
-       n = size // numchanges
-       for i in range(0, rows.size(), n) :
-            rows[i] +=1
-       return rows
+            n = size // numchanges
+        for i in range(0, rows.size(), n):
+            rows[i] += 1
+        return rows
 
 
         
@@ -165,7 +164,7 @@ class GenerateWidgets:
     def generate_number_form(self, input_fields, styles, layout, submit_handler):
         scroll_view = ScrollView(size_hint=(1, 6))
         form_layout = GridLayout(cols=3, padding=styles.padding, spacing=[styles.spacing, 10], size_hint_y=None)
-        form_layout.bind(minimum_height=form_layout.setter('height'))  # Adjust height dynamically
+        form_layout.bind(minimum_height=form_layout.setter('height'))
 
         text_inputs = {}
         tooltips = []
@@ -174,16 +173,15 @@ class GenerateWidgets:
             return Window.width * 0.25
 
         for header, fields in input_fields.items():
-            # Add header label spanning all columns
             header_label = Label(text=header, color=styles.header_color, size_hint=(1, None), height=styles.height)
             form_layout.add_widget(header_label)
             form_layout.add_widget(Label())  # Empty for alignment
             form_layout.add_widget(Label())  # Empty for alignment
 
             for field_name, (label_text, default_value, tooltip_text) in fields.items():
-                form_layout.add_widget(Label(text=label_text, color=styles.label_color, size_hint=(0.2, None), height=styles.height))
+                form_layout.add_widget(Label(text=label_text, color=styles.label_color, size_hint=(1, None), height=styles.height))
 
-                text_input = TextInput(size_hint=(0.4, None), height=styles.height,
+                text_input = TextInput(size_hint=(1, None), height=styles.height,
                                        background_color=styles.background_color, text=str(default_value))
                 text_inputs[field_name] = text_input
                 form_layout.add_widget(text_input)
@@ -250,7 +248,6 @@ class StitchPattern:
 
     # input : 2d list   output: 2d list
     def encode(self, matrix, rows=10, columns=10):
-
         string = str(self.smul) + "," + str(self.srem) + "," + str(self.rmul) + "," + str(self.rrem) + "\n"
         for i in range(rows):
             row = ",".join(str(matrix[i][j]) for j in range(columns))
@@ -260,11 +257,24 @@ class StitchPattern:
         return matrix
 
     def save(self):
-
         pass
 
-    def load(self):
-        pass
+
+    # public, takes in 2d array pattern and passes to encoder to be saved as string in file
+    def save(self, id, pattern):
+        try:
+            with open(id+".txt", "w") as file:
+                file.write(self.encode(pattern))
+        except Exception as e:
+            print("ERROR: ", e)
+
+    # public, takes in id and returns 2d array from file
+    def load(self, id):
+        try:
+            with open(id + ".txt", "r") as file:
+                return self.decode(file.read())
+        except Exception as e:
+            print("ERROR: ", e)
 
 class PatternVisualizer:
     def __init__(self):
