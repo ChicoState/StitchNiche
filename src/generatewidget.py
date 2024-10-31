@@ -19,9 +19,9 @@ from utils import GenerateWidgets
 Window.clearcolor = (1, 1, 1, 1)  # RGBA
 
 
-class StitchNicheApp(App):
+class  StitchNicheApp(App):
     def build(self):
-        self.sc = StitchCalculator()
+        self.sc = StitchCalculator(1,0,1,0)
         layout = BoxLayout(orientation='vertical', spacing=30, size_hint=(1, 1))
 
 
@@ -35,7 +35,7 @@ class StitchNicheApp(App):
         style = Styles(
             label_color=(0.5, 0, 0.5, 1),
             header_color = (0.8, 0, 0.1),
-            size_hint=(0.90, None),
+            size_hint=(1, 1),
             height=35,
             background_color=(1, 1, 1, 1),
             padding=5,
@@ -146,5 +146,3 @@ class StitchNicheApp(App):
 
 if __name__ == "__main__":
     StitchNicheApp().run()
-
-
