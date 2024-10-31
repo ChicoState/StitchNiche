@@ -42,7 +42,7 @@ class StitchNicheApp(App):
             spacing=20
         )
         input_fields = {
-            "Cast on stitch #:": {                                                                              # header
+            "Project measurements:": {                                                                              # header
                 "width_input": (                                                                                # variable associated with input
                     "Width Input",                                                                              # label text for input
                     "8.0",                                                                                      # default value
@@ -119,14 +119,17 @@ class StitchNicheApp(App):
                          enumerate(self.pattern_inputs)}
         }
 
+        self.sc.setpattern(float(self.pattern_inputs[0].text), #Sets Pattern restrictions for stitch calculator
+                     float(self.pattern_inputs[1].text),
+                     float(self.pattern_inputs[2].text),
+                     float(self.pattern_inputs[3].text),)
+        
         result = self.sc.rectangle_calculator(float(self.width_input.text),
-                                              float(self.length_input.text),
-                                              float(self.gauge_width_input.text),
-                                              float(self.gauge_length_input.text),
-                                              float(self.pattern_inputs[0].text),
-                                              float(self.pattern_inputs[1].text),
-                                              float(self.pattern_inputs[2].text),
-                                              float(self.pattern_inputs[3].text), )
+                     float(self.length_input.text),
+                     float(self.gauge_width_input.text),
+                     float(self.gauge_length_input.text),
+                     )
+        
 
         # Print or process the outputs as needed (for demonstration)
         # print(outputs)  # You can remove this line later

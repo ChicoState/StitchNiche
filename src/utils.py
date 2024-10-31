@@ -119,12 +119,13 @@ class StitchCalculator():
         castoff =  self.one_dim_calculator(ending_width, gauge_w, True)
         rownum = self.one_dim_calculator(length, gauge_l, False)
 
-        numchanges = abs(castoff - caston) // self.pattern.smul
+        numchanges = int(abs(castoff - caston) // self.pattern.smul)
 
         rows = numpy.zeros(rownum)
 
-        rows = self.distribute_change(rows, numchanges)
-        rows *= self.pattern.smul
+        if(numchanges != 0):
+            rows = self.distribute_change(rows, numchanges)
+            rows *= self.pattern.smul
 
         return (caston, castoff, rows)
 
@@ -133,13 +134,13 @@ class StitchCalculator():
        """
        Evenly distributes increases and decreases through out the rows of a pattern
        """
-       size = rows.size()
+       size = numpy.size(rows)
+       n = size // numchanges
        if (numchanges >= size) :
             m = numchanges // size
             rows += m
             numchanges %= size
-            
-       n = size // numchanges
+            n = size // numchanges
        for i in range(0, rows.size(), n) :
             rows[i] +=1
        return rows
