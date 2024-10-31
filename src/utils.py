@@ -114,6 +114,7 @@ class StitchCalculator():
                 return option1
             else:
                 return option2
+            
     def change_width_calculator(self, starting_width, ending_width, length, gauge_l, gauge_w) :
         caston = self.one_dim_calculator(starting_width, gauge_w, True)
         castoff =  self.one_dim_calculator(ending_width, gauge_w, True)
@@ -121,29 +122,29 @@ class StitchCalculator():
 
         numchanges = int(abs(castoff - caston) // self.pattern.smul)
 
-        rows = numpy.zeros(rownum)
+
+        changingrows = {"row number": "increase/decrease by"}
 
         if(numchanges != 0):
-            rows = self.distribute_change(rows, numchanges)
-            rows *= self.pattern.smul
+            changingrows = self.distribute_change(rownum, changingrows, numchanges)
+            
+        return (caston, castoff, changingrows)
 
-        return (caston, castoff, rows)
 
-
-    def distribute_change(self, rows, numchanges) :
+    def distribute_change(self, rownum, changingrows, numchanges) :
        """
        Evenly distributes increases and decreases through out the rows of a pattern
        """
-       size = numpy.size(rows)
+       size = rownum
        n = size // numchanges
        if (numchanges >= size) :
             m = numchanges // size
-            rows += m
+            changingrows[i+1] += (m*self.pattern.smul)
             numchanges %= size
             n = size // numchanges
-       for i in range(0, rows.size(), n) :
-            rows[i] +=1
-       return rows
+       for i in range(1, size, n+1) :
+            changingrows[i] += self.pattern.smul
+       return changingrows
 
 
         
