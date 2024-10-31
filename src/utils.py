@@ -128,7 +128,7 @@ class StitchCalculator():
         if(numchanges != 0):
             changingrows = self.distribute_change(rownum, changingrows, numchanges)
             
-        return (caston, castoff, changingrows)
+        return (caston, castoff, rownum, changingrows)
 
 
     def distribute_change(self, rownum, changingrows, numchanges) :
@@ -137,15 +137,17 @@ class StitchCalculator():
        """
        size = rownum
        n = size // numchanges
-       if (numchanges >= size) :
-            m = numchanges // size
-            changingrows[i+1] += (m*self.pattern.smul)
-            numchanges %= size
-            n = size // numchanges
-       for i in range(1, size, n+1) :
-            changingrows[i] += self.pattern.smul
-       return changingrows
+       m = 0
+       if (numchanges > rownum):
+           m = numchanges // rownum
+           for i in range(1, rownum + 1):
+               changingrows[i] = int(self.pattern.smul * m)
+           numchanges = numchanges % rownum
+           n = rownum // numchanges
 
+       for i in range(1, rownum + 1, n):
+           changingrows[i] = int(self.pattern.smul * (1 + m))
+       return changingrows
 
         
 

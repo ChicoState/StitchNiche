@@ -9,7 +9,7 @@ class  ChangeWidthPage(App):
         title_label = Label(text="Stitch Niche", font_size='32sp', color=(0.5, 0, 0.5, 1))
         layout.add_widget(title_label)
 
-        title_label = Label(text="Stitch Calculator - Rectangle", font_size='20sp', color=(0.5, 0, 0.5, 1))
+        title_label = Label(text="Stitch Calculator - Change Width", font_size='20sp', color=(0.5, 0, 0.5, 1))
         layout.add_widget(title_label)
 
         # form
