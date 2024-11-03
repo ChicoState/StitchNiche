@@ -42,23 +42,23 @@ class  ChangeWidthPage(App):
             "Project Measurements:": {                                                                              # header
                 "start_width_input": (                                                                                # variable associated with input
                     "Starting Width Input",                                                                              # label text for input
-                    "8.0",                                                                                      # default value
+                    "35.0",                                                                                      # default value
                     "How wide your finished piece should be at first row. Can be entered as a decimal or whole number." # tooltip
                 ),
                 "end_width_input": (  # variable associated with input
                     "Ending Width Input",  # label text for input
-                    "16.0",  # default value
+                    "45.0",  # default value
                     "How wide your finished piece should be at final row. Can be entered as a decimal or whole number."
                 # tooltip
                 ),
                 "length_input": (
                     "Length Input",
-                    "60.0",
+                    "10.0",
                     "How long you want your finished piece to be. Can be entered as a decimal or whole number."
                 ),
                 "gauge_width_input": (
                     "Gauge Width Input",
-                    "7.14",
+                    "5.0",
                     "The ratio of stitches to an inch for your specific pattern worked by you. Calculated by dividing the count of stitches within a section of a row by the width of that section. Can be entered as a decimal or whole number."
                 ),
                 "gauge_length_input": (
