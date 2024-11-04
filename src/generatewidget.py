@@ -21,7 +21,7 @@ Window.clearcolor = (1, 1, 1, 1)  # RGBA
 
 class  StitchNicheApp(App):
     def build(self):
-        self.sc = StitchCalculator(1,0,1,0)
+        self.sc = StitchCalculator()
         layout = BoxLayout(orientation='vertical', spacing=30, size_hint=(1, 1))
 
 
