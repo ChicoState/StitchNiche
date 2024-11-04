@@ -8,11 +8,13 @@ import re
 import numpy
 
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.core.window import Window
+from kivy.graphics import Color, Rectangle
 
 class StitchCalculator():
     def __init__(self):
@@ -122,7 +124,6 @@ class StitchCalculator():
 
         numchanges = int(abs(castoff - caston) // self.pattern.smul)
 
-
         changingrows = {"row number": "increase/decrease by"}
 
         if(numchanges != 0):
@@ -148,9 +149,6 @@ class StitchCalculator():
        for i in range(1, rownum + 1, n):
            changingrows[i] = int(self.pattern.smul * (1 + m))
        return changingrows
-
-        
-
 
 class Styles:
     def __init__(self, label_color, header_color, size_hint, height, background_color, padding, spacing):
@@ -238,12 +236,14 @@ class GenerateWidgets:
     # smul, srem - s % smul = srem
     # rmul, rrem - r % rmul = rem
     # array: size = (smul*x + srem) * (rmul*y + rrem)
+
 class StitchPattern:
     def __init__(self, stitch_multiple = 1, stitch_remainder = 0, row_multiple = 1, row_remainder = 0):
         self.smul = stitch_multiple
         self.srem = stitch_remainder
         self.rmul = row_multiple
         self.rrem = row_remainder
+        self.pattern_matrix = None
 
     def setpattern(self, stitch_multiple = 1, stitch_remainder = 0, row_multiple = 1, row_remainder = 0):
         self.smul = stitch_multiple
@@ -261,9 +261,27 @@ class StitchPattern:
 
         return matrix
 
-    def save(self):
-        pass
+    def decode(self, input_string):
+        # Split the string into lines
+        lines = input_string.strip().split('\n')
+        if not lines:
+            raise ValueError("Input string is empty")
 
+        # Extract the first line and parse the 4 ints
+        first_line = lines[0].strip()
+        first_line_ints = [int(x.strip()) for x in first_line.split(',')]
+        if len(first_line_ints) != 4:
+            raise ValueError("First line must contain exactly 4 integers")
+        self.smul, self.srem, self.rmul, self.rrem = first_line_ints
+
+        # Now parse the rest of the lines as the pattern matrix
+        pattern_matrix = []
+        for line in lines[1:]:
+            line = line.strip()
+            row = [int(x.strip()) for x in line.split(',')]
+            pattern_matrix.append(row)
+        self.pattern_matrix = pattern_matrix
+        # probably want it to return True if it passes or something.
 
     # public, takes in 2d array pattern and passes to encoder to be saved as string in file
     def save(self, id, pattern):
@@ -276,11 +294,89 @@ class StitchPattern:
     # public, takes in id and returns 2d array from file
     def load(self, id):
         try:
-            with open(id + ".txt", "r") as file:
+            with open("saved_patterns" + id + ".txt", "r") as file:
                 return self.decode(file.read())
         except Exception as e:
             print("ERROR: ", e)
 
-class PatternVisualizer:
-    def __init__(self):
-        pass;
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
+from kivy.graphics import Color, Rectangle
+
+class PatternVisualizer(BoxLayout):
+    def __init__(self, matrix, color_value_map, **kwargs):
+        super(PatternVisualizer, self).__init__(**kwargs)
+        self.orientation = 'vertical'
+
+        # Add the legend layout at the top
+        legend_layout = BoxLayout(orientation='horizontal', size_hint_y=0.2, padding=(10, 10))
+        for value, (text, color) in color_value_map.items():
+            legend_layout.add_widget(LegendItem(text=text, color=color))
+        self.add_widget(legend_layout)
+
+        # Add the interactive grid of buttons
+        self.pattern_matrix = PatternMatrix(matrix, color_value_map)
+        self.add_widget(self.pattern_matrix)
+
+    def get_matrix(self):
+        return self.pattern_matrix.get_matrix()
+
+
+class PatternMatrix(GridLayout):
+    def __init__(self, matrix, color_value_map, **kwargs):
+        super(PatternMatrix, self).__init__(**kwargs)
+        self.cols = len(matrix[0])
+        self.spacing = 5
+        self.padding = 10
+
+        # Store the color map and matrix
+        self.color_value_map = color_value_map
+        self.array = matrix
+
+        # Dictionary to keep track of buttons and their positions
+        self.buttons = {}
+
+        for row in range(len(self.array)):
+            for col in range(len(self.array[0])):
+                value = self.array[row][col]
+                color = self.value_to_color(value)
+                btn = Button(background_normal="", background_color=color)
+                btn.bind(on_press=self.change_color)
+                # Store the button with its position
+                self.buttons[btn] = (row, col)
+                self.add_widget(btn)
+
+    def value_to_color(self, value):
+        return self.color_value_map.get(value, [1, 1, 1, 1])[1]  # Retrieve color from map
+
+    def change_color(self, instance):
+        row, col = self.buttons[instance]
+        current_value = self.array[row][col]
+        values = list(self.color_value_map.keys())
+        next_value = values[(values.index(current_value) + 1) % len(values)]
+        self.array[row][col] = next_value
+        instance.background_color = self.value_to_color(next_value)
+
+    def get_matrix(self):
+        return self.array
+
+
+class LegendItem(BoxLayout):
+    def __init__(self, text, color, **kwargs):
+        super(LegendItem, self).__init__(**kwargs)
+        self.orientation = 'vertical'
+        self.size_hint_y = 0.7
+
+        with self.canvas.before:
+            Color(*color)  # Set the color from the color map
+            self.rect = Rectangle(size=self.size, pos=self.pos)
+
+        # Update the rectangle size and position when the widget changes
+        self.bind(size=self.update_rect, pos=self.update_rect)
+        self.add_widget(Label(text=text, size_hint_y=0.3))
+
+    def update_rect(self, *args):
+        self.rect.size = self.size
+        self.rect.pos = self.pos
