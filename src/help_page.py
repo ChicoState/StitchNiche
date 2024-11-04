@@ -43,8 +43,8 @@ class HelpCenterScreen(Screen):
         pattern_buttons.bind(minimum_height=pattern_buttons.setter('height'))
         
         # Pattern buttons
-        patterns = [("Rectangle", "rectangle_helppage.txt"), ("Square", "square_helppage.txt"), 
-                    ("Circle", "circle_helppage.txt"), ("Trapezoid", "trapezoid_helppage.txt")]
+        patterns = [("Rectangle", "rectangle_helppage.txt"), 
+                    ("Circle", "circle_helppage.txt"), ("Change Width", "change_width_helppage.txt")]
 
         for pattern, filename in patterns:
             btn = Button(text=pattern, size_hint_y=None, height=50, on_release=lambda btn, f=filename: self.load_pattern(f))

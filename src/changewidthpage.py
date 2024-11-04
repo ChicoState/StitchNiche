@@ -1,3 +1,4 @@
+
 import os
 import sys
 from email.quoprimime import header_decode
@@ -15,11 +16,7 @@ from utils import Styles
 from utils import StitchCalculator
 from utils import GenerateWidgets
 
-# Set the background color to white
-Window.clearcolor = (1, 1, 1, 1)  # RGBA
-
-
-class  StitchNicheApp(App):
+class  ChangeWidthPage(App):
     def build(self):
         self.sc = StitchCalculator()
         layout = BoxLayout(orientation='vertical', spacing=30, size_hint=(1, 1))
@@ -28,7 +25,7 @@ class  StitchNicheApp(App):
         title_label = Label(text="Stitch Niche", font_size='32sp', color=(0.5, 0, 0.5, 1))
         layout.add_widget(title_label)
 
-        title_label = Label(text="Stitch Calculator - Rectangle", font_size='20sp', color=(0.5, 0, 0.5, 1))
+        title_label = Label(text="Stitch Calculator - Change Width", font_size='20sp', color=(0.5, 0, 0.5, 1))
         layout.add_widget(title_label)
 
         # form
@@ -42,20 +39,26 @@ class  StitchNicheApp(App):
             spacing=20
         )
         input_fields = {
-            "Project measurements:": {                                                                              # header
-                "width_input": (                                                                                # variable associated with input
-                    "Width Input",                                                                              # label text for input
-                    "8.0",                                                                                      # default value
-                    "How wide you want your finished piece to be. Can be entered as a decimal or whole number." # tooltip
+            "Project Measurements:": {                                                                              # header
+                "start_width_input": (                                                                                # variable associated with input
+                    "Starting Width Input",                                                                              # label text for input
+                    "35.0",                                                                                      # default value
+                    "How wide your finished piece should be at first row. Can be entered as a decimal or whole number." # tooltip
+                ),
+                "end_width_input": (  # variable associated with input
+                    "Ending Width Input",  # label text for input
+                    "45.0",  # default value
+                    "How wide your finished piece should be at final row. Can be entered as a decimal or whole number."
+                # tooltip
                 ),
                 "length_input": (
                     "Length Input",
-                    "60.0",
+                    "10.0",
                     "How long you want your finished piece to be. Can be entered as a decimal or whole number."
                 ),
                 "gauge_width_input": (
                     "Gauge Width Input",
-                    "7.14",
+                    "5.0",
                     "The ratio of stitches to an inch for your specific pattern worked by you. Calculated by dividing the count of stitches within a section of a row by the width of that section. Can be entered as a decimal or whole number."
                 ),
                 "gauge_length_input": (
@@ -95,7 +98,8 @@ class  StitchNicheApp(App):
             styles=style,
             submit_handler=self.submit,
         )
-        self.width_input = text_inputs['width_input']
+        self.start_width_input = text_inputs['start_width_input']
+        self.end_width_input = text_inputs['end_width_input']
         self.length_input = text_inputs['length_input']
         self.gauge_width_input = text_inputs['gauge_width_input']
         self.gauge_length_input = text_inputs['gauge_length_input']
@@ -111,7 +115,8 @@ class  StitchNicheApp(App):
     def submit(self, instance):
         # Capture all inputs into a dictionary
         outputs = {
-            "Width": float(self.width_input.text),
+            "Starting Width": float(self.start_width_input.text),
+            "Ending Width": float(self.end_width_input.text),
             "Length": float(self.length_input.text),
             "Gauge Width": float(self.gauge_width_input.text),
             "Gauge Length": float(self.gauge_length_input.text),
@@ -119,30 +124,31 @@ class  StitchNicheApp(App):
                          enumerate(self.pattern_inputs)}
         }
 
-        self.sc.setpattern(float(self.pattern_inputs[0].text), #Sets Pattern restrictions for stitch calculator
-                     float(self.pattern_inputs[1].text),
-                     float(self.pattern_inputs[2].text),
-                     float(self.pattern_inputs[3].text),)
-        
-        result = self.sc.rectangle_calculator(float(self.width_input.text),
-                     float(self.length_input.text),
-                     float(self.gauge_width_input.text),
-                     float(self.gauge_length_input.text),
-                     )
-        
+        self.sc.setpattern(float(self.pattern_inputs[0].text),  # Sets Pattern restrictions for stitch calculator
+                           float(self.pattern_inputs[1].text),
+                           float(self.pattern_inputs[2].text),
+                           float(self.pattern_inputs[3].text), )
+
+        result = self.sc.change_width_calculator(float(self.start_width_input.text),
+                                              float(self.end_width_input.text),
+                                              float(self.length_input.text),
+                                              float(self.gauge_width_input.text),
+                                              float(self.gauge_length_input.text),
+                                              )
 
         # Print or process the outputs as needed (for demonstration)
         # print(outputs)  # You can remove this line later
         # Refresh the app by resetting input fields
-        self.width_input.text = ""
+        self.end_width_input.text = ""
+        self.start_width_input.text = ""
         self.length_input.text = ""
         self.gauge_width_input.text = ""
         self.gauge_length_input.text = ""
         for input_field in self.pattern_inputs:
             input_field.text = ""
 
-        self.result_label.text = str(result);
+        self.result_label.text = str(result)
 
 
 if __name__ == "__main__":
-    StitchNicheApp().run()
+    ChangeWidthPage().run()

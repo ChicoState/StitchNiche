@@ -1,0 +1,50 @@
+Change Width Pattern Calculator:
+
+This tool is designed to help you in figuring out how to change from one width to another over a given length. This can be used to figure out a portion of a pattern or just on its own. Used in tandem with the rectangle calculator, you can use it to create patterns such as skirts and hats. Substituting the word rows for rounds, you can also use it to calculate patterns worked in the round rather than straight. 
+
+Measurement Information Needed:
+
+Starting width: How wide you want your finished piece to be. Can be entered as a decimal or whole number
+
+starting width: How wide your finished piece should be at the first row. Can be entered as a decimal or whole number.
+
+ending width: How wide your finished piece should be at the last row. Can be entered as a decimal or whole number
+
+length: How long you want your finished piece to be. Can be entered as a decimal or whole number
+
+gauge_width: The ratio of stitches to an inch for your specific pattern worked by you. Calculated by dividing the count of stitches within a section of a row by the width of that section. Can be entered as a decimal or whole number
+
+gauge_length: The ratio of rows to an inch for your specific pattern worked by you. Calculated by dividing the count of rows within a section of length by the length of the section. Can be entered as a decimal or whole number
+
+Pattern Information Needed
+
+stitch_multiple: Based on the constraints your pattern has for casting on, if your pattern calls for working a multiple of x stitches plus y, your stitch_multiple is x. If it doesn’t have any requirements, enter 1. This value is always a whole number.
+
+stitch_remainder: Based on the constraints your pattern has for casting on, if your pattern calls for working a multiple of x stitches plus y, your stitch_remainder is y. If it doesn’t have any requirements or just calls for a multiple x, enter 0. This value is always a whole number.
+
+row_multiple: Based on whether it matters the row on which you quit your stitch pattern. If your pattern has x rows and calls for repeating rows n through m, then your row_multiple is (m - n + 1). If it does not matter where you end the pattern and bind off, then enter 1. This value is always a whole number
+
+row_remainder: Based on whether it matters the row on which you quit your stitch pattern. If your pattern has x rows and calls for repeating rows n through m, then your row_remainder is (x - m + n - 1).  If it does not matter where you end the pattern and bind off, then enter 0. This value is always a whole number.
+
+
+
+Example of using the Change Width Calculator with real numbers:
+
+Suppose you are wanting to create a skirt with a starting width of 35 inches and increase to 45 inches over 10 inches for the first section of the skirt. The Calculator will calculate your starting number of stitches, your final number of stitches, your number of rows to complete, and on which rows you will increase your stitch number and by how many stitches to increase on that row.
+
+Let us say you are knitting straight using worsted weight yarn and your pattern is the stockinette stitch.
+
+Stockinette Stitch Pattern:
+
+Work a multiple of one stitch
+Row 1: Repeat (K1) across
+Row 2: Repeat (P1) across
+Repeat Rows 1-2 for pattern
+
+For starting width you enter 35, for ending width you enter 45 and for length you enter 10. 
+
+To find your gauges you work a small swatch 15 stitches wide and 18 rows long. Your swatch is about 3 inches wide and 3 inches long. For gauge_length, you enter 5.0, which is 15/3 rounded to the second decimal place. For gauge_width, you enter 6 which is 18/3.
+
+Your pattern restrictions are simple for this case since we can knit any number of stitches and any number of rows without an issue. Stitch_multiple = 1, row_multiple = 1, stitch_remainder = 0, row_remainder = 0. 
+
+The result you receive is a list of your number of stitches to cast on, the number of stitches to end with, the number of rows to complete, and list of row numbers to increase on with the number of stitches to add on that row.

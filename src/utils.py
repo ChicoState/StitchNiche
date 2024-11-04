@@ -111,38 +111,43 @@ class StitchCalculator():
             option1 = estimate - difference + multiple
             option2 = estimate - difference
             if difference > abs(multiple - difference):
-                return option1
+                return int (option1)
             else:
-                return option2
+                return int (option2)
+            
     def change_width_calculator(self, starting_width, ending_width, length, gauge_l, gauge_w) :
         caston = self.one_dim_calculator(starting_width, gauge_w, True)
         castoff =  self.one_dim_calculator(ending_width, gauge_w, True)
         rownum = self.one_dim_calculator(length, gauge_l, False)
 
-        numchanges = abs(castoff - caston) // self.pattern.smul
-
-        rows = numpy.zeros(rownum)
-
-        rows = self.distribute_change(rows, numchanges)
-        rows *= self.pattern.smul
-
-        return (caston, castoff, rows)
+        numchanges = int(abs(castoff - caston) // self.pattern.smul)
 
 
-    def distribute_change(self, rows, numchanges) :
-        """
-        Evenly distributes increases and decreases through out the rows of a pattern
-        """
-        size = rows.size()
-        if (numchanges >= size) :
-            m = numchanges // size
-            rows += m
-            numchanges %= size
-            n = size // numchanges
-        for i in range(0, rows.size(), n):
-            rows[i] += 1
-        return rows
+        changingrows = {"row number": "increase/decrease by"}
 
+        if(numchanges != 0):
+            changingrows = self.distribute_change(rownum, changingrows, numchanges)
+            
+        return (caston, castoff, rownum, changingrows)
+
+
+    def distribute_change(self, rownum, changingrows, numchanges) :
+       """
+       Evenly distributes increases and decreases through out the rows of a pattern
+       """
+       size = rownum
+       n = size // numchanges
+       m = 0
+       if (numchanges > rownum):
+           m = numchanges // rownum
+           for i in range(1, rownum + 1):
+               changingrows[i] = int(self.pattern.smul * m)
+           numchanges = numchanges % rownum
+           n = rownum // numchanges
+
+       for i in range(1, rownum + 1, n):
+           changingrows[i] = int(self.pattern.smul * (1 + m))
+       return changingrows
 
         
 
