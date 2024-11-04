@@ -3,7 +3,10 @@ Utils holds a lot of useful functionalities
 
 stitch_calculator is responsible for all mathematics done with stitches
 """
+import random
 import re
+import traceback
+from uu import encode
 
 import numpy
 
@@ -243,6 +246,8 @@ class StitchPattern:
         self.srem = stitch_remainder
         self.rmul = row_multiple
         self.rrem = row_remainder
+
+        self.id = str(random.randint(10000, 99999))
         self.pattern_matrix = None
 
     def setpattern(self, stitch_multiple = 1, stitch_remainder = 0, row_multiple = 1, row_remainder = 0):
@@ -251,15 +256,26 @@ class StitchPattern:
         self.rmul = row_multiple
         self.rrem = row_remainder
 
+    def full_save(self, matrix):
+        try:
+            print(matrix)
+            print(len(matrix))
+            print(matrix[0])
+            encoded_pattern = self.encode(matrix, rows=len(matrix), columns=len(matrix[0]))
+            self.save(self.id, encoded_pattern)
+            return True
+        except Exception as e:
+            print("In StitchPattern:full_save: ", e)
+            return False
+
+
     # input : 2d list   output: 2d list
     def encode(self, matrix, rows=10, columns=10):
-        string = str(self.smul) + "," + str(self.srem) + "," + str(self.rmul) + "," + str(self.rrem) + "\n"
-        for i in range(rows):
-            row = ",".join(str(matrix[i][j]) for j in range(columns))
-            string += row + "\n"
-        string = string.rstrip("\n")
-
-        return matrix
+        encoded_pattern = f"{self.smul},{self.srem},{self.rmul},{self.rrem}\n"
+        for row in matrix[1:]:
+            encoded_pattern += (",".join(map(str, row))) + '\n'
+        print(encoded_pattern)
+        return encoded_pattern # Return as single cohesive string
 
     def decode(self, input_string):
         # Split the string into lines
@@ -286,10 +302,11 @@ class StitchPattern:
     # public, takes in 2d array pattern and passes to encoder to be saved as string in file
     def save(self, id, pattern):
         try:
-            with open(id+".txt", "w") as file:
+            with open("saved_patterns/"+id+str(random.randint(0, 5))+".txt", "w") as file:
                 file.write(self.encode(pattern))
         except Exception as e:
-            print("ERROR: ", e)
+            print("In StitchPattern:save: ", e)
+            traceback.print_exc()
 
     # public, takes in id and returns 2d array from file
     def load(self, id):
@@ -297,13 +314,8 @@ class StitchPattern:
             with open("saved_patterns" + id + ".txt", "r") as file:
                 return self.decode(file.read())
         except Exception as e:
-            print("ERROR: ", e)
-
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.label import Label
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from kivy.graphics import Color, Rectangle
+            print("In StitchPattern:load: ", e)
+            traceback.print_exc()
 
 class PatternVisualizer(BoxLayout):
     def __init__(self, matrix, color_value_map, **kwargs):

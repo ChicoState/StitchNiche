@@ -1,3 +1,5 @@
+from gc import disable
+
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
@@ -6,6 +8,7 @@ from kivymd.uix.toolbar import MDTopAppBar
 from kivy.core.window import Window
 from kivymd.app import MDApp
 
+from src.utils import StitchPattern
 from utils import PatternVisualizer  # Import PatternVisualizer from utils
 
 Window.clearcolor = (1, 1, 1, 1)
@@ -26,7 +29,7 @@ class PatternVisuals(Screen):
         # Define initial matrix and color map for PatternVisualizer
         initial_matrix = [[0 for _ in range(5)] for _ in range(5)]
         color_value_map = {
-            -1: ("Purl", [0.7, 0.7, 1, 1]),   # Light Blue
+            -1: ("Purl", [0.4, 0.4, 1, 1]),   # Light Blue
              0: ("No Stitch", [1, 1, 1, 1]),  # White
              1: ("Knit", [0, 0, 0.5, 1])      # Dark Blue
         }
@@ -50,8 +53,13 @@ class PatternVisuals(Screen):
         self.save_handler(matrix)
 
     def save_handler(self, matrix):
-        # Placeholder for the save functionality
-        print("Matrix saved:", matrix)
+        pattern = StitchPattern()
+        try:
+            pattern.full_save(matrix)
+            print("Matrix saved:", pattern.id)
+        except Exception as e:
+            # Later update screen saying something went wrong!
+            print(e)
 
     # Screen navigation methods
     def calc_screen(self, *args):
