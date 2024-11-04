@@ -4,4 +4,3 @@ For example , the reverse of a knit stitch is perl, and vice versa.
 | ------------- | ------------- | 
 |  No Stitch (empty)  | 0 | 
 |  Knit / Purl  | 1 / -1 | 
-|  Garter / Stockinette   | 2 / -2 | 
