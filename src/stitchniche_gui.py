@@ -7,10 +7,8 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
-from kivymd.uix.navigationdrawer import MDNavigationDrawer
 from kivymd.uix.toolbar import MDTopAppBar
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivymd.uix.navigationdrawer import MDNavigationDrawer
 from kivymd.app import MDApp
 
 # Import the StitchCalculator class
@@ -143,6 +141,9 @@ class Stitch_Calc(Screen):
         self.manager.current = 'home'
     def visual_screen(self, *args):
         self.manager.current='visualizer'
+    def changewidth_screen(self, *args):
+        self.manager.current='ChangeWidthPage'
+    
 
 class Screens(ScreenManager):
     def __init__(self, **kwargs):

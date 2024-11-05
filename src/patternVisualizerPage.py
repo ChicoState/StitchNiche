@@ -8,7 +8,7 @@ from kivymd.uix.toolbar import MDTopAppBar
 from kivy.core.window import Window
 from kivymd.app import MDApp
 
-from src.utils import StitchPattern
+from utils import StitchPattern
 from utils import PatternVisualizer  # Import PatternVisualizer from utils
 
 Window.clearcolor = (1, 1, 1, 1)
@@ -73,6 +73,9 @@ class PatternVisuals(Screen):
 
     def visual_screen(self, *args):
         self.manager.current = 'visualizer'
+
+    def changewidth_screen(self, *args):
+        self.manager.current='ChangeWidthPage'
 
 
 class StitchNicheApp(MDApp):
