@@ -18,9 +18,9 @@ gauge_length: The ratio of rows to an inch for your specific pattern worked by y
 
 Pattern Information Needed
 
-stitch_multiple: Based on the constraints your pattern has for casting on, if your pattern calls for working a multiple of x stitches plus y, your stitch_multiple is x. If it doesn’t have any requirements, enter 1. This value is always a whole number.
+stitch_multiple: Based on the constraints your pattern has for casting on, if your pattern calls for working a multiple of x stitches plus y, your stitch_multiple is x. If it does not have any requirements, enter 1. This value is always a whole number.
 
-stitch_remainder: Based on the constraints your pattern has for casting on, if your pattern calls for working a multiple of x stitches plus y, your stitch_remainder is y. If it doesn’t have any requirements or just calls for a multiple x, enter 0. This value is always a whole number.
+stitch_remainder: Based on the constraints your pattern has for casting on, if your pattern calls for working a multiple of x stitches plus y, your stitch_remainder is y. If it does not have any requirements or just calls for a multiple x, enter 0. This value is always a whole number.
 
 row_multiple: Based on whether it matters the row on which you quit your stitch pattern. If your pattern has x rows and calls for repeating rows n through m, then your row_multiple is (m - n + 1). If it does not matter where you end the pattern and bind off, then enter 1. This value is always a whole number
 
