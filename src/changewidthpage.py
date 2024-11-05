@@ -10,24 +10,29 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
+from kivymd.uix.toolbar import MDTopAppBar
+from kivy.uix.screenmanager import Screen, ScreenManager
+from kivymd.app import MDApp
 
 from utils import Styles
 # Import the StitchCalculator class
 from utils import StitchCalculator
 from utils import GenerateWidgets
 
-class  ChangeWidthPage(App):
-    def build(self):
-        self.sc = StitchCalculator()
-        layout = BoxLayout(orientation='vertical', spacing=30, size_hint=(1, 1))
+class ChangeWidthPage(Screen):
+    def __init__(self, **kwargs):
+        super(ChangeWidthPage, self).__init__(**kwargs)
+        from homePage import NavDrawer
+        layout = BoxLayout(orientation='vertical', padding=10, spacing=20)
+        nav_drawer = NavDrawer(self)
+        # nav_bar handles nav_drawer
+        nav_bar = MDTopAppBar(title="Stitch Calculator - Change Width",md_bg_color=(0.5, 0, 0.5, 1))
+        # opens nav_drawer on click
+        nav_bar.left_action_items = [["menu", lambda x: nav_drawer.set_state("toggle")]]
+        layout.add_widget(nav_bar)
 
-
-        title_label = Label(text="Stitch Niche", font_size='32sp', color=(0.5, 0, 0.5, 1))
-        layout.add_widget(title_label)
-
-        title_label = Label(text="Stitch Calculator - Change Width", font_size='20sp', color=(0.5, 0, 0.5, 1))
-        layout.add_widget(title_label)
-
+        self.sc = StitchCalculator()   
+        
         # form
         style = Styles(
             label_color=(0.5, 0, 0.5, 1),
@@ -109,8 +114,20 @@ class  ChangeWidthPage(App):
         self.pattern_inputs.append(text_inputs['Row Multiple'])
         self.pattern_inputs.append(text_inputs['Row Remainder'])
 
+        # should be the last widgets added
+        self.add_widget(layout)
+        self.add_widget(nav_drawer)
 
-        return layout
+    def calc_screen(self, *args):
+        self.manager.current='stitch_calc'
+    def help_screen(self, *args):
+        self.manager.current='help'
+    def home_screen(self, *args):
+        self.manager.current='home'
+    def visual_screen(self, *args):
+        self.manager.current='visualizer'
+    def changewidth_screen(self, *args):
+        self.manager.current='ChangeWidthPage'
 
     def submit(self, instance):
         # Capture all inputs into a dictionary
@@ -150,5 +167,11 @@ class  ChangeWidthPage(App):
         self.result_label.text = str(result)
 
 
-if __name__ == "__main__":
-    ChangeWidthPage().run()
+class StitchNicheApp(MDApp):
+    def build(self):
+        sm = ScreenManager()
+        sm.add_widget(ChangeWidthPage(name='ChangeWidthPage'))    
+        return sm
+
+if __name__ == '__main__':
+    StitchNicheApp().run()
