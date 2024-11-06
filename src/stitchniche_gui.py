@@ -100,6 +100,19 @@ class Stitch_Calc(Screen):
         self.add_widget(nav_drawer)
 
     def submit(self, instance):
+        # make sure tha user can't put in empty values
+        float_check = [self.width_input.text, self.length_input.text, self.gauge_length_input.text, self.gauge_width_input.text]
+        msg=[]
+        for input_field in self.pattern_inputs:
+            float_check.append(input_field.text)
+        for input in float_check:
+            if(self.sc.isValid(input,"int",msg) == True or self.sc.isValid(input,"float",msg) == True):
+                continue
+            else:
+                self.result_label.text=msg[0]
+                return
+
+
         # Capture all inputs into a dictionary
         outputs = {
             "Width": float(self.width_input.text),

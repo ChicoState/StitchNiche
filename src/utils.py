@@ -43,28 +43,28 @@ class StitchCalculator():
     def setpattern(self, stitch_multiple, stitch_remainder, row_multiple, row_remainder) :
         self.pattern.setpattern(stitch_multiple, stitch_remainder, row_multiple, row_remainder)
 
-    def isValid(self, userIn, mode):
+    def isValid(self, userIn, mode, msg):
         isValid = True
 
         if (mode == "int"):
             if (not userIn.isdigit()):
                 isValid = False
-                print("Number must be a positive integer!")
+                msg.append("Number must be a positive integer!")
 
         elif (mode == "float"):
             try:
                 float(userIn)
             except ValueError:
-                print("Number must be a valid float!")
+                msg.append("Number must be a valid float!")
                 isValid = False
 
             if (re.search("-", userIn) != None):
-                print("Number must be positive!")
+                msg.append("Number must be positive!")
                 isValid = False
 
 
         else:
-            print("Mode must be int or float")
+            msg.append("Mode must be int or float")
             isValid = False
 
         return isValid

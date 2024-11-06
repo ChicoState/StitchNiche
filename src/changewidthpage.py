@@ -130,6 +130,20 @@ class ChangeWidthPage(Screen):
         self.manager.current='ChangeWidthPage'
 
     def submit(self, instance):
+        # make sure tha user can't put in empty values
+        float_check = [self.start_width_input.text, self.end_width_input.text, 
+                       self.length_input.text, self.gauge_length_input.text, 
+                       self.gauge_width_input.text]
+        msg=[]
+        for input_field in self.pattern_inputs:
+            float_check.append(input_field.text)
+        for input in float_check:
+            if(self.sc.isValid(input,"int",msg) == True or self.sc.isValid(input,"float",msg) == True):
+                continue
+            else:
+                self.result_label.text=msg[0]
+                return
+            
         # Capture all inputs into a dictionary
         outputs = {
             "Starting Width": float(self.start_width_input.text),
