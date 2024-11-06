@@ -1,6 +1,6 @@
 Rectangle Pattern Calculator:
 
-This tool is designed to help you achieve a knitted or crocheted rectangle (worked from bottom up) as close to your desired size as possible. Examples of projects it can help with include scarfs, washcloths, blankets, shawls, or just panels of a larger project. It works within the restrictions of the stitch pattern you are using so that your project doesn't end at an awkward point, but is as symmetrical as you desire.
+This tool is designed to help you achieve a knitted or crocheted rectangle (worked from bottom up) as close to your desired size as possible. Examples of projects it can help with include scarfs, washcloths, blankets, shawls, or just panels of a larger project. It works within the restrictions of the stitch pattern you are using so that your project does not end at an awkward point, but is as symmetrical as you desire.
 
 Measurement Information Needed:
 
@@ -14,9 +14,9 @@ gauge_length: The ratio of rows to an inch for your specific pattern worked by y
 
 Pattern Information Needed
 
-stitch_multiple: Based on the constraints your pattern has for casting on, if your pattern calls for working a multiple of x stitches plus y, your stitch_multiple is x. If it doesn’t have any requirements, enter 1. This value is always a whole number.
+stitch_multiple: Based on the constraints your pattern has for casting on, if your pattern calls for working a multiple of x stitches plus y, your stitch_multiple is x. If it does not have any requirements, enter 1. This value is always a whole number.
 
-stitch_remainder: Based on the constraints your pattern has for casting on, if your pattern calls for working a multiple of x stitches plus y, your stitch_remainder is y. If it doesn’t have any requirements or just calls for a multiple x, enter 0. This value is always a whole number.
+stitch_remainder: Based on the constraints your pattern has for casting on, if your pattern calls for working a multiple of x stitches plus y, your stitch_remainder is y. If it does not have any requirements or just calls for a multiple x, enter 0. This value is always a whole number.
 
 row_multiple: Based on whether it matters the row on which you quit your stitch pattern. If your pattern has x rows and calls for repeating rows n through m, then your row_multiple is (m - n + 1). If it does not matter where you end the pattern and bind off, then enter 1. This value is always a whole number
 
@@ -38,5 +38,5 @@ To find your gauges you work a small swatch 25 stitches wide and 18 rows long. Y
 
 Since the pattern calls for a multiple of 5 and does specify any extra stitches, you enter 5 for stitch_multiple and 0 for stitch_remainder.
 
-While the pattern does have you repeat Rows 1 through 2, this particular stitch will not look different no matter where you stop so you enter row_multiple = 1 and row_remainder = 0, since it doesn’t really matter which row you end on.
+While the pattern does have you repeat Rows 1 through 2, this particular stitch will not look different no matter where you stop so you enter row_multiple = 1 and row_remainder = 0, since it does not really matter which row you end on.
 
