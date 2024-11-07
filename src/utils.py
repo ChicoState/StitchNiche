@@ -105,8 +105,9 @@ class StitchCalculator():
         else :
             multiple = self.pattern.rmul
             remainder = self.pattern.rrem
-
         estimate = int(x * gauge)
+        if (x*gauge - estimate > 0.5) :
+            estimate = estimate + 1
         difference = (estimate -  remainder)% multiple
         if difference == 0:
             return estimate
