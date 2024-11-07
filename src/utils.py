@@ -112,13 +112,13 @@ class StitchCalculator():
 
         difference = (estimate -  remainder)% multiple
 
-        option1 = estimate - difference + multiple
-        option2 = estimate - difference
-        
+        option1 = int(estimate - difference + multiple)
+        option2 = int(estimate - difference)
+
         if difference > abs(multiple - difference):
-            return int (option1)
+            return option1
         else:
-            return int (option2)
+            return option2
             
     def change_width_calculator(self, starting_width, ending_width, length, gauge_l, gauge_w) :
         caston = self.one_dim_calculator(starting_width, gauge_w, True)
