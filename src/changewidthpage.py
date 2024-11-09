@@ -13,6 +13,7 @@ from kivy.core.window import Window
 from kivymd.uix.toolbar import MDTopAppBar
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivymd.app import MDApp
+from kivy.uix.scrollview import ScrollView
 
 from utils import Styles
 # Import the StitchCalculator class
@@ -25,6 +26,7 @@ class ChangeWidthPage(Screen):
         from homePage import NavDrawer
         layout = BoxLayout(orientation='vertical', padding=10, spacing=20)
         nav_drawer = NavDrawer(self)
+
         # nav_bar handles nav_drawer
         nav_bar = MDTopAppBar(title="Stitch Calculator - Change Width",md_bg_color=(0.5, 0, 0.5, 1))
         # opens nav_drawer on click
@@ -103,6 +105,7 @@ class ChangeWidthPage(Screen):
             styles=style,
             submit_handler=self.submit,
         )
+
         self.start_width_input = text_inputs['start_width_input']
         self.end_width_input = text_inputs['end_width_input']
         self.length_input = text_inputs['length_input']
@@ -152,24 +155,43 @@ class ChangeWidthPage(Screen):
             "Gauge Width": float(self.gauge_width_input.text),
             "Gauge Length": float(self.gauge_length_input.text),
             "Patterns": {f"Pattern {chr(65 + i)}": input_field.text for i, input_field in
-                         enumerate(self.pattern_inputs)}
+                        enumerate(self.pattern_inputs)}
         }
 
         self.sc.setpattern(float(self.pattern_inputs[0].text),  # Sets Pattern restrictions for stitch calculator
-                           float(self.pattern_inputs[1].text),
-                           float(self.pattern_inputs[2].text),
-                           float(self.pattern_inputs[3].text), )
+                        float(self.pattern_inputs[1].text),
+                        float(self.pattern_inputs[2].text),
+                        float(self.pattern_inputs[3].text), )
 
         result = self.sc.change_width_calculator(float(self.start_width_input.text),
-                                              float(self.end_width_input.text),
-                                              float(self.length_input.text),
-                                              float(self.gauge_width_input.text),
-                                              float(self.gauge_length_input.text),
-                                              )
+                                            float(self.end_width_input.text),
+                                            float(self.length_input.text),
+                                            float(self.gauge_width_input.text),
+                                            float(self.gauge_length_input.text),
+                                            )
+        # Format the output
+        cast_on, cast_off, row_count, adjustments = result  # Unpack the result
+        formatted_result = f"[b]Cast on #[/b]: {cast_on}\n"
+        formatted_result += f"[b]Cast off #[/b]: {cast_off}\n"
+        formatted_result += f"[b]Total Row Count:[/b] {row_count}\n\n"  # Adding row count display
 
-        # Print or process the outputs as needed (for demonstration)
-        # print(outputs)  # You can remove this line later
-        # Refresh the app by resetting input fields
+        # Add "Row number count" header only if adjustments are not empty
+        if adjustments:
+            formatted_result += "[b]Row number count:[/b]\n"
+    
+            # DEBUG: Print adjustments to inspect its contents
+            print("DEBUG: adjustments =", adjustments)
+
+        # Iterate through the adjustments to format each row increase/decrease
+            for row, change in adjustments.items():
+                if isinstance(row, int) and isinstance(change, (int, float)):  # Ensure valid data types
+                    formatted_result += f"    • Row #{row}: [i]increase/decrease by {change}[/i]\n"
+
+        # Display the formatted result in the result label with markup enabled
+        self.result_label.markup = True
+        self.result_label.text = formatted_result
+
+        # Reset input fields
         self.end_width_input.text = ""
         self.start_width_input.text = ""
         self.length_input.text = ""
@@ -178,7 +200,7 @@ class ChangeWidthPage(Screen):
         for input_field in self.pattern_inputs:
             input_field.text = ""
 
-        self.result_label.text = str(result)
+        ##self.result_label.text = str(result)
 
 
 class StitchNicheApp(MDApp):
