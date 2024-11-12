@@ -4,3 +4,16 @@ For example , the reverse of a knit stitch is perl, and vice versa.
 | ------------- | ------------- | 
 |  No Stitch (empty)  | 0 | 
 |  Knit / Purl  | 1 / -1 | 
+
+
+# Visualizer Codes
+|  Snap Name  | Snap Code |
+| ------------- | ------------- | 
+|  Knit  | K | 
+|  Purl  | P |
+|  Slip  | X | 
+|  Yarn Over  | Y |
+| Twisted Knit | TK |
+| Twisted Purl | TP |
+|  |  |
+|  |  |
