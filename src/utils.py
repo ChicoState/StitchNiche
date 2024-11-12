@@ -6,6 +6,7 @@ stitch_calculator is responsible for all mathematics done with stitches
 import random
 import re
 import traceback
+import os
 from uu import encode
 
 import numpy
@@ -302,6 +303,10 @@ class StitchPattern:
     # public, takes in 2d array pattern and passes to encoder to be saved as string in file
     def save(self, id, pattern):
         try:
+            directory = "saved_patterns"
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+
             with open("saved_patterns/"+id+str(random.randint(0, 5))+".txt", "w") as file:
                 file.write(self.encode(pattern))
         except Exception as e:
