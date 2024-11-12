@@ -303,7 +303,7 @@ class StitchPattern:
     # public, takes in 2d array pattern and passes to encoder to be saved as string in file
     def save(self, id, pattern):
         try:
-            directory = "saved_patterns"
+            directory = "saved_patterns"       # make sure saved_patters dir exists
             if not os.path.exists(directory):
                 os.makedirs(directory)
 
