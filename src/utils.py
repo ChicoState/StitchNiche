@@ -19,6 +19,11 @@ from kivy.uix.button import Button
 from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle
 
+# for testing purposes
+# can be commented out
+def simple(input):
+    return input
+
 class StitchCalculator():
     def __init__(self):
         """
