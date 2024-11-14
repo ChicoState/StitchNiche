@@ -18,15 +18,19 @@ import requests
 class ResourcesScreen(Screen):
     def __init__(self, **kwargs):
         super(ResourcesScreen, self).__init__(**kwargs)
+        from homePage import NavDrawer # placing imports here avoid circular dependencies 
 
         # Main layout
         layout = BoxLayout(orientation='vertical', padding=10, spacing=20)
 
         # Navigation Drawer
-        nav_drawer = MDNavigationDrawer()  # Creating a basic MDNavigationDrawer
-        nav_bar = MDTopAppBar(title="StitchNiche Resources", md_bg_color=(0.5, 0, 0.5, 1))
+        nav_drawer = NavDrawer(self)
+        # nav_bar handles nav_drawer
+        nav_bar = MDTopAppBar(title="Resources",md_bg_color=(0.5, 0, 0.5, 1))
+        # opens nav_drawer on click
         nav_bar.left_action_items = [["menu", lambda x: nav_drawer.set_state("toggle")]]
         layout.add_widget(nav_bar)
+
 
         # Banner
         banner = BoxLayout(size_hint=(1, 0.15))
@@ -100,6 +104,8 @@ class ResourcesScreen(Screen):
         layout.add_widget(scroll_view)
 
         self.add_widget(layout)
+        self.add_widget(nav_drawer)
+
 
     def download_image(self, url, title):
         """Download an image from the given URL and save it locally."""
@@ -130,6 +136,19 @@ class ResourcesScreen(Screen):
         if hasattr(self, 'banner_bg'):
             self.banner_bg.pos = instance.pos
             self.banner_bg.size = instance.size
+
+    def calc_screen(self, *args):
+        self.manager.current='stitch_calc'
+    def help_screen(self, *args):
+        self.manager.current='help'
+    def home_screen(self, *args):
+        self.manager.current = 'home'
+    def visual_screen(self, *args):
+        self.manager.current='visualizer'
+    def changewidth_screen(self, *args):
+        self.manager.current='ChangeWidthPage'
+    def resource_screen(self, *args):
+        self.manager.current= 'resources'
 
 class StitchNicheApp(MDApp):
     def build(self):

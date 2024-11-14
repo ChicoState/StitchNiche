@@ -11,6 +11,7 @@ from help_page import HelpCenterScreen, PatternScreen
 from stitchniche_gui import Stitch_Calc
 from patternVisualizerPage import PatternVisuals
 from changewidthpage import ChangeWidthPage
+from resourcespage import ResourcesScreen
 # Set the background color to white
 Window.clearcolor = (1, 1, 1, 1)  # RGBA
 
@@ -40,6 +41,10 @@ def NavDrawer(s):
 
     list = MakeList("Change Width", "ruler", s.changewidth_screen)
     nav_layout.add_widget(list)
+
+    list = MakeList("Resources", "book", s.resource_screen)
+    nav_layout.add_widget(list)
+
     # end of items in nav_drawer
 
     # without this the list starts from bottom
@@ -87,6 +92,8 @@ class Home(Screen):
         self.manager.current='visualizer'
     def changewidth_screen(self, *args):
         self.manager.current='ChangeWidthPage'
+    def resource_screen(self, *args):
+        self.manager.current= 'resources'
 
 """ in order to create a new Screen you need to (in a new .py file):
         1. include
@@ -113,6 +120,7 @@ class Screens(ScreenManager):
         self.add_widget(PatternScreen(name='pattern'))
         self.add_widget(PatternVisuals(name='visualizer'))
         self.add_widget(ChangeWidthPage(name='ChangeWidthPage')) 
+        self.add_widget(ResourcesScreen(name='resources'))
 
 
 class StitchNicheApp(MDApp):
