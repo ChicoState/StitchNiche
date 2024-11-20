@@ -13,7 +13,9 @@ from kivymd.app import MDApp
 import webbrowser
 import os
 import requests
-
+from patternVisualizerPage import PatternVisuals
+from kivy.config import Config
+Config.set('input', 'mouse', 'mouse,disable_multitouch') # remove red dots on ctrl-click
 
 class ResourcesScreen(Screen):
     def __init__(self, **kwargs):

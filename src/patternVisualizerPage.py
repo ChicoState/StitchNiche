@@ -10,6 +10,8 @@ from kivymd.app import MDApp
 
 from utils import StitchPattern
 from utils import PatternVisualizer  # Import PatternVisualizer from utils
+from kivy.config import Config
+Config.set('input', 'mouse', 'mouse,disable_multitouch') # remove red dots on ctrl-click
 Window.clearcolor = (1, 1, 1, 1)
 
 class PatternVisuals(Screen):

@@ -9,6 +9,8 @@ from kivymd.uix.toolbar import MDTopAppBar
 from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle
 from kivymd.app import MDApp
+from kivy.config import Config
+Config.set('input', 'mouse', 'mouse,disable_multitouch') # remove red dots on ctrl-click
 
 Window.clearcolor = (1, 1, 1, 1)
 
