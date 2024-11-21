@@ -12,6 +12,9 @@ from stitchniche_gui import Stitch_Calc
 from patternVisualizerPage import PatternVisuals
 from changewidthpage import ChangeWidthPage
 from resourcespage import ResourcesScreen
+from kivy.config import Config
+Config.set('input', 'mouse', 'mouse,disable_multitouch') # remove red dots on ctrl-click
+
 # Set the background color to white
 Window.clearcolor = (1, 1, 1, 1)  # RGBA
 
