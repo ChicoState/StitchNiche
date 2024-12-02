@@ -14,6 +14,8 @@ from kivymd.app import MDApp
 # Import the StitchCalculator class
 from utils import StitchCalculator
 from help_page import HelpCenterScreen
+from kivy.config import Config
+Config.set('input', 'mouse', 'mouse,disable_multitouch') # remove red dots on ctrl-click
 
 # Set the background color to white
 Window.clearcolor = (1, 1, 1, 1)  # RGBA

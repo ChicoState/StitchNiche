@@ -2,7 +2,6 @@
 import os
 import sys
 from email.quoprimime import header_decode
-
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
@@ -14,11 +13,12 @@ from kivymd.uix.toolbar import MDTopAppBar
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivymd.app import MDApp
 from kivy.uix.scrollview import ScrollView
-
 from utils import Styles
 # Import the StitchCalculator class
 from utils import StitchCalculator
 from utils import GenerateWidgets
+from kivy.config import Config
+Config.set('input', 'mouse', 'mouse,disable_multitouch') # remove red dots on ctrl-click
 
 class ChangeWidthPage(Screen):
     def __init__(self, **kwargs):
