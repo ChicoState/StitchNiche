@@ -160,7 +160,8 @@ class Stitch_Calc(Screen):
         self.manager.current='ChangeWidthPage'
     def resource_screen(self, *args):
         self.manager.current= 'resources'
-    
+    def rectangle_screen(self, *args):
+        self.manager.current = 'rectangle'
 
 class Screens(ScreenManager):
     def __init__(self, **kwargs):

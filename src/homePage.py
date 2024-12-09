@@ -12,6 +12,7 @@ from stitchniche_gui import Stitch_Calc
 from patternVisualizerPage import PatternVisuals
 from changewidthpage import ChangeWidthPage
 from resourcespage import ResourcesScreen
+from rectanglePage import Rectangle
 from kivy.config import Config
 Config.set('input', 'mouse', 'mouse,disable_multitouch') # remove red dots on ctrl-click
 
@@ -48,6 +49,8 @@ def NavDrawer(s):
     list = MakeList("Resources", "book", s.resource_screen)
     nav_layout.add_widget(list)
 
+    list = MakeList("Rectangle Calculator", "rectangle", s.rectangle_screen)
+    nav_layout.add_widget(list)
     # end of items in nav_drawer
 
     # without this the list starts from bottom
@@ -97,7 +100,8 @@ class Home(Screen):
         self.manager.current='ChangeWidthPage'
     def resource_screen(self, *args):
         self.manager.current= 'resources'
-
+    def rectangle_screen(self, *args):
+        self.manager.current = 'rectangle'
 """ in order to create a new Screen you need to (in a new .py file):
         1. include
             from kivy.uix.screenmanager import Screen
@@ -124,6 +128,7 @@ class Screens(ScreenManager):
         self.add_widget(PatternVisuals(name='visualizer'))
         self.add_widget(ChangeWidthPage(name='ChangeWidthPage')) 
         self.add_widget(ResourcesScreen(name='resources'))
+        self.add_widget(Rectangle(name='rectangle'))
 
 
 class StitchNicheApp(MDApp):
