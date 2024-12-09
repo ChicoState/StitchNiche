@@ -81,6 +81,9 @@ class PatternVisuals(Screen):
     def resource_screen(self, *args):
         self.manager.current= 'resources'
 
+    def rectangle_screen(self, *args):
+        self.manager.current = 'rectangle'
+
 
 class StitchNicheApp(MDApp):
     def build(self):

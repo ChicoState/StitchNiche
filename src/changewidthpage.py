@@ -133,6 +133,9 @@ class ChangeWidthPage(Screen):
         self.manager.current='ChangeWidthPage'
     def resource_screen(self, *args):
         self.manager.current= 'resources'
+    def rectangle_screen(self, *args):
+        self.manager.current = 'rectangle'
+    
 
     def submit(self, instance):
         # make sure tha user can't put in empty values

@@ -71,6 +71,8 @@ class HelpCenterScreen(Screen):
         self.manager.current='ChangeWidthPage'
     def resource_screen(self, *args):
         self.manager.current= 'resources'
+    def rectangle_screen(self, *args):
+        self.manager.current = 'rectangle'
 
     def load_pattern(self, filename):
         # Switch to the pattern screen and load content from the selected file
