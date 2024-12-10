@@ -41,15 +41,6 @@ class ResourcesScreen(Screen):
             self.banner_bg = Rectangle(pos=banner.pos, size=banner.size)
         banner.bind(pos=self.update_bg, size=self.update_bg)
 
-        banner_text = Label(
-            text="Resources",
-            color=[1, 1, 1, 1],
-            font_size='32sp',
-            bold=True,
-            size_hint=(1, 1)
-        )
-        banner.add_widget(banner_text)
-        layout.add_widget(banner)
 
         # ScrollView for video resources
         scroll_view = ScrollView(size_hint=(1, 1))
@@ -64,23 +55,44 @@ class ResourcesScreen(Screen):
                 "video_url": "https://www.youtube.com/watch?v=m2Ky76O116A"
             },
             {
+                "title": "The (Almost) Ultimate Guide on Knitting for Beginners",
+                "thumbnail_url": "https://img.youtube.com/vi/m1FbeAvBrVE/0.jpg",
+                "video_url": "https://www.youtube.com/watch?v=m1FbeAvBrVE&t=190s"
+            },
+            {
                 "title": "Introduction to Gauge in Knitting",
                 "thumbnail_url": "https://img.youtube.com/vi/FckfIcDU52o/0.jpg",
                 "video_url": "https://www.youtube.com/watch?v=FckfIcDU52o"
+            },
+            {
+                "title": "How to Change a Knitting Pattern to a New Gauge",
+                "thumbnail_url": "https://img.youtube.com/vi/q3kf8aFDSFE/0.jpg",
+                "video_url": "https://www.youtube.com/watch?v=q3kf8aFDSFE"
+            },
+            {
+                "title": "How to Knit The Purl Stitch for Beginners",
+                "thumbnail_url": "https://img.youtube.com/vi/zPwR2tYQWBY/0.jpg",
+                "video_url": "https://www.youtube.com/watch?v=zPwR2tYQWBY"
+            },                      
+            {            
+                "title": "Moss Stitch Rectangle - NO Twisting NO Jogs",
+                "thumbnail_url": "https://img.youtube.com/vi/ou8ADtFot40/0.jpg",
+                "video_url": "https://www.youtube.com/watch?v=ou8ADtFot40"
             }
         ]
+
 
         for video in videos:
             image_path = self.download_image(video["thumbnail_url"], video["title"])
             if image_path:
                 # Layout for each video
-                video_box = BoxLayout(orientation='vertical', size_hint_y=None, height=400)
+                video_box = BoxLayout(orientation='vertical', size_hint_y=None, height=400, padding=10, spacing=10)
 
                 # Title button
                 title_button = Button(
                     text=video["title"],
                     size_hint=(None, None),
-                    width=350,
+                    width=400,
                     height=40,
                     font_size=16,
                     text_size=(350, None),
@@ -92,7 +104,7 @@ class ResourcesScreen(Screen):
                 title_button.bind(on_release=lambda instance, url=video["video_url"]: webbrowser.open(url))
 
                 # Thumbnail image
-                thumbnail = Image(source=image_path, size_hint_y=None, height=300, width=350)
+                thumbnail = Image(source=image_path, size_hint=(None,None), height=300, width=400)
 
                 # Add to video layout
                 video_box.add_widget(title_button)
