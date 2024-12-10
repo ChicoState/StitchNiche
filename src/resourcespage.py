@@ -13,20 +13,26 @@ from kivymd.app import MDApp
 import webbrowser
 import os
 import requests
-
+from patternVisualizerPage import PatternVisuals
+from kivy.config import Config
+Config.set('input', 'mouse', 'mouse,disable_multitouch') # remove red dots on ctrl-click
 
 class ResourcesScreen(Screen):
     def __init__(self, **kwargs):
         super(ResourcesScreen, self).__init__(**kwargs)
+        from homePage import NavDrawer # placing imports here avoid circular dependencies 
 
         # Main layout
         layout = BoxLayout(orientation='vertical', padding=10, spacing=20)
 
         # Navigation Drawer
-        nav_drawer = MDNavigationDrawer()  # Creating a basic MDNavigationDrawer
-        nav_bar = MDTopAppBar(title="StitchNiche Resources", md_bg_color=(0.5, 0, 0.5, 1))
+        nav_drawer = NavDrawer(self)
+        # nav_bar handles nav_drawer
+        nav_bar = MDTopAppBar(title="Resources",md_bg_color=(0.5, 0, 0.5, 1))
+        # opens nav_drawer on click
         nav_bar.left_action_items = [["menu", lambda x: nav_drawer.set_state("toggle")]]
         layout.add_widget(nav_bar)
+
 
         # Banner
         banner = BoxLayout(size_hint=(1, 0.15))
@@ -35,15 +41,6 @@ class ResourcesScreen(Screen):
             self.banner_bg = Rectangle(pos=banner.pos, size=banner.size)
         banner.bind(pos=self.update_bg, size=self.update_bg)
 
-        banner_text = Label(
-            text="Resources",
-            color=[1, 1, 1, 1],
-            font_size='32sp',
-            bold=True,
-            size_hint=(1, 1)
-        )
-        banner.add_widget(banner_text)
-        layout.add_widget(banner)
 
         # ScrollView for video resources
         scroll_view = ScrollView(size_hint=(1, 1))
@@ -58,23 +55,44 @@ class ResourcesScreen(Screen):
                 "video_url": "https://www.youtube.com/watch?v=m2Ky76O116A"
             },
             {
+                "title": "The (Almost) Ultimate Guide on Knitting for Beginners",
+                "thumbnail_url": "https://img.youtube.com/vi/m1FbeAvBrVE/0.jpg",
+                "video_url": "https://www.youtube.com/watch?v=m1FbeAvBrVE&t=190s"
+            },
+            {
                 "title": "Introduction to Gauge in Knitting",
                 "thumbnail_url": "https://img.youtube.com/vi/FckfIcDU52o/0.jpg",
                 "video_url": "https://www.youtube.com/watch?v=FckfIcDU52o"
+            },
+            {
+                "title": "How to Change a Knitting Pattern to a New Gauge",
+                "thumbnail_url": "https://img.youtube.com/vi/q3kf8aFDSFE/0.jpg",
+                "video_url": "https://www.youtube.com/watch?v=q3kf8aFDSFE"
+            },
+            {
+                "title": "How to Knit The Purl Stitch for Beginners",
+                "thumbnail_url": "https://img.youtube.com/vi/zPwR2tYQWBY/0.jpg",
+                "video_url": "https://www.youtube.com/watch?v=zPwR2tYQWBY"
+            },                      
+            {            
+                "title": "Moss Stitch Rectangle - NO Twisting NO Jogs",
+                "thumbnail_url": "https://img.youtube.com/vi/ou8ADtFot40/0.jpg",
+                "video_url": "https://www.youtube.com/watch?v=ou8ADtFot40"
             }
         ]
+
 
         for video in videos:
             image_path = self.download_image(video["thumbnail_url"], video["title"])
             if image_path:
                 # Layout for each video
-                video_box = BoxLayout(orientation='vertical', size_hint_y=None, height=400)
+                video_box = BoxLayout(orientation='vertical', size_hint_y=None, height=400, padding=10, spacing=10)
 
                 # Title button
                 title_button = Button(
                     text=video["title"],
                     size_hint=(None, None),
-                    width=350,
+                    width=400,
                     height=40,
                     font_size=16,
                     text_size=(350, None),
@@ -86,7 +104,7 @@ class ResourcesScreen(Screen):
                 title_button.bind(on_release=lambda instance, url=video["video_url"]: webbrowser.open(url))
 
                 # Thumbnail image
-                thumbnail = Image(source=image_path, size_hint_y=None, height=300, width=350)
+                thumbnail = Image(source=image_path, size_hint=(None,None), height=300, width=400)
 
                 # Add to video layout
                 video_box.add_widget(title_button)
@@ -100,6 +118,8 @@ class ResourcesScreen(Screen):
         layout.add_widget(scroll_view)
 
         self.add_widget(layout)
+        self.add_widget(nav_drawer)
+
 
     def download_image(self, url, title):
         """Download an image from the given URL and save it locally."""
@@ -130,6 +150,21 @@ class ResourcesScreen(Screen):
         if hasattr(self, 'banner_bg'):
             self.banner_bg.pos = instance.pos
             self.banner_bg.size = instance.size
+
+    def calc_screen(self, *args):
+        self.manager.current='stitch_calc'
+    def help_screen(self, *args):
+        self.manager.current='help'
+    def home_screen(self, *args):
+        self.manager.current = 'home'
+    def visual_screen(self, *args):
+        self.manager.current='visualizer'
+    def changewidth_screen(self, *args):
+        self.manager.current='ChangeWidthPage'
+    def resource_screen(self, *args):
+        self.manager.current= 'resources'
+    def rectangle_screen(self, *args):
+        self.manager.current = 'rectangle'
 
 class StitchNicheApp(MDApp):
     def build(self):
