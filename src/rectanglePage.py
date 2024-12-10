@@ -119,8 +119,6 @@ class Rectangle(Screen):
         self.add_widget(layout)
         self.add_widget(nav_drawer)
     
-    def calc_screen(self, *args):
-        self.manager.current='stitch_calc'
     def help_screen(self, *args):
         self.manager.current='help'
     def home_screen(self, *args):

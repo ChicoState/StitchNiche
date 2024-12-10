@@ -1,9 +1,7 @@
 from kivymd.uix.screen import Screen
 from kivymd.uix.toolbar import MDTopAppBar
-from kivymd.uix.navigationdrawer import MDNavigationDrawer
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.gridlayout import GridLayout
 from kivy.graphics import Color, Rectangle
@@ -13,7 +11,6 @@ from kivymd.app import MDApp
 import webbrowser
 import os
 import requests
-from patternVisualizerPage import PatternVisuals
 from kivy.config import Config
 Config.set('input', 'mouse', 'mouse,disable_multitouch') # remove red dots on ctrl-click
 
@@ -151,8 +148,6 @@ class ResourcesScreen(Screen):
             self.banner_bg.pos = instance.pos
             self.banner_bg.size = instance.size
 
-    def calc_screen(self, *args):
-        self.manager.current='stitch_calc'
     def help_screen(self, *args):
         self.manager.current='help'
     def home_screen(self, *args):

@@ -1,6 +1,4 @@
 from gc import disable
-
-from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen, ScreenManager
@@ -63,9 +61,6 @@ class PatternVisuals(Screen):
             print(e)
 
     # Screen navigation methods
-    def calc_screen(self, *args):
-        self.manager.current = 'stitch_calc'
-
     def help_screen(self, *args):
         self.manager.current = 'help'
 
