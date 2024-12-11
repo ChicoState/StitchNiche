@@ -1,11 +1,4 @@
-import os
-import sys
 from email.quoprimime import header_decode
-from kivy.app import App
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.textinput import TextInput
-from kivy.uix.label import Label
-from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
 from kivymd.uix.toolbar import MDTopAppBar
@@ -39,8 +32,6 @@ class Rectangle(Screen):
         layout.add_widget(nav_bar)
 
         self.sc = StitchCalculator()
-
-
 
         style = Styles(
             label_color=(0.5, 0, 0.5, 1),
@@ -119,8 +110,6 @@ class Rectangle(Screen):
         self.add_widget(layout)
         self.add_widget(nav_drawer)
     
-    def calc_screen(self, *args):
-        self.manager.current='stitch_calc'
     def help_screen(self, *args):
         self.manager.current='help'
     def home_screen(self, *args):

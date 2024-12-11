@@ -1,4 +1,3 @@
-from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.scrollview import ScrollView
@@ -59,8 +58,6 @@ class HelpCenterScreen(Screen):
         self.add_widget(layout)
         self.add_widget(nav_drawer)
         
-    def calc_screen(self, *args):
-        self.manager.current='stitch_calc'
     def help_screen(self, *args):
         self.manager.current='help'
     def home_screen(self, *args):
@@ -138,7 +135,6 @@ class PatternScreen(Screen):
         line_height = 20  # Approximate height per line in pixels
         return line_height * content.count('\n') + 40
     
-
 class StitchNicheApp(MDApp):
     def build(self):
         sm = ScreenManager()

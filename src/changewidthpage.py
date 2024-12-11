@@ -1,18 +1,8 @@
-
-import os
-import sys
 from email.quoprimime import header_decode
-from kivy.app import App
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.textinput import TextInput
-from kivy.uix.label import Label
-from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
-from kivy.core.window import Window
 from kivymd.uix.toolbar import MDTopAppBar
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivymd.app import MDApp
-from kivy.uix.scrollview import ScrollView
 from utils import Styles
 # Import the StitchCalculator class
 from utils import StitchCalculator
@@ -121,8 +111,6 @@ class ChangeWidthPage(Screen):
         self.add_widget(layout)
         self.add_widget(nav_drawer)
 
-    def calc_screen(self, *args):
-        self.manager.current='stitch_calc'
     def help_screen(self, *args):
         self.manager.current='help'
     def home_screen(self, *args):
@@ -136,7 +124,6 @@ class ChangeWidthPage(Screen):
     def rectangle_screen(self, *args):
         self.manager.current = 'rectangle'
     
-
     def submit(self, instance):
         # make sure tha user can't put in empty values
         float_check = [self.start_width_input.text, self.end_width_input.text, 
@@ -206,7 +193,6 @@ class ChangeWidthPage(Screen):
             input_field.text = ""
 
         ##self.result_label.text = str(result)
-
 
 class StitchNicheApp(MDApp):
     def build(self):

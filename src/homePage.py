@@ -8,12 +8,11 @@ from kivymd.uix.navigationdrawer import MDNavigationDrawer
 from kivymd.app import MDApp
 from kivymd.uix.list import OneLineIconListItem, IconLeftWidget
 from help_page import HelpCenterScreen, PatternScreen
-from stitchniche_gui import Stitch_Calc
 from patternVisualizerPage import PatternVisuals
 from changewidthpage import ChangeWidthPage
 from resourcespage import ResourcesScreen
 from rectanglePage import Rectangle
-from kivy.config import Config
+from kivy.config import Config 
 Config.set('input', 'mouse', 'mouse,disable_multitouch') # remove red dots on ctrl-click
 
 # Set the background color to white
@@ -37,19 +36,16 @@ def NavDrawer(s):
     list = MakeList("Help", "help-box",s.help_screen)
     nav_layout.add_widget(list)
 
-    list = MakeList("Calculator", "calculator",s.calc_screen)
+    list = MakeList("Rectangle Calculator", "calculator", s.rectangle_screen)
+    nav_layout.add_widget(list)
+    
+    list = MakeList("Change Width", "ruler", s.changewidth_screen)
     nav_layout.add_widget(list)
 
     list = MakeList("Visualizer", "eye-outline",s.visual_screen)
     nav_layout.add_widget(list)
 
-    list = MakeList("Change Width", "ruler", s.changewidth_screen)
-    nav_layout.add_widget(list)
-
     list = MakeList("Resources", "book", s.resource_screen)
-    nav_layout.add_widget(list)
-
-    list = MakeList("Rectangle Calculator", "rectangle", s.rectangle_screen)
     nav_layout.add_widget(list)
     # end of items in nav_drawer
 
@@ -79,8 +75,8 @@ class Home(Screen):
 
         # child: makes row for buttons
         container = BoxLayout(orientation='horizontal', spacing='100sp', padding='100sp')
-        container.add_widget(Button(text='Crocheting',font_size='25sp', background_color=(0.5, 0, 0.5, 1),on_press=self.calc_screen))
-        container.add_widget(Button(text='Knitting',font_size='25sp',background_color=(0.5, 0, 0.5, 1),on_press=self.calc_screen))
+        container.add_widget(Button(text='Crocheting',font_size='25sp', background_color=(0.5, 0, 0.5, 1),on_press=self.rectangle_screen))
+        container.add_widget(Button(text='Knitting',font_size='25sp',background_color=(0.5, 0, 0.5, 1),on_press=self.rectangle_screen))
 
         layout.add_widget(container)
         layout.add_widget(Label())
@@ -88,8 +84,6 @@ class Home(Screen):
         self.add_widget(layout)
         self.add_widget(nav_drawer)
 
-    def calc_screen(self, *args):
-        self.manager.current='stitch_calc'
     def help_screen(self, *args):
         self.manager.current='help'
     def home_screen(self, *args):
@@ -122,7 +116,6 @@ class Screens(ScreenManager):
         super(Screens, self).__init__(**kwargs)
         # first Screen added is set as the current Screen
         self.add_widget(Home(name='home'))
-        self.add_widget(Stitch_Calc(name='stitch_calc'))
         self.add_widget(HelpCenterScreen(name='help'))
         self.add_widget(PatternScreen(name='pattern'))
         self.add_widget(PatternVisuals(name='visualizer'))
