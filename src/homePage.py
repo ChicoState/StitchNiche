@@ -12,7 +12,7 @@ from patternVisualizerPage import PatternVisuals
 from changewidthpage import ChangeWidthPage
 from resourcespage import ResourcesScreen
 from rectanglePage import Rectangle
-from kivy.config import Config
+from kivy.config import Config 
 Config.set('input', 'mouse', 'mouse,disable_multitouch') # remove red dots on ctrl-click
 
 # Set the background color to white
@@ -47,7 +47,6 @@ def NavDrawer(s):
 
     list = MakeList("Resources", "book", s.resource_screen)
     nav_layout.add_widget(list)
-
     # end of items in nav_drawer
 
     # without this the list starts from bottom

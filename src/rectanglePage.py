@@ -33,8 +33,6 @@ class Rectangle(Screen):
 
         self.sc = StitchCalculator()
 
-
-
         style = Styles(
             label_color=(0.5, 0, 0.5, 1),
             header_color=(0.8, 0, 0.1),

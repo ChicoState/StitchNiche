@@ -124,7 +124,6 @@ class ChangeWidthPage(Screen):
     def rectangle_screen(self, *args):
         self.manager.current = 'rectangle'
     
-
     def submit(self, instance):
         # make sure tha user can't put in empty values
         float_check = [self.start_width_input.text, self.end_width_input.text, 
@@ -194,7 +193,6 @@ class ChangeWidthPage(Screen):
             input_field.text = ""
 
         ##self.result_label.text = str(result)
-
 
 class StitchNicheApp(MDApp):
     def build(self):

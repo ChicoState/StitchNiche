@@ -79,13 +79,11 @@ class PatternVisuals(Screen):
     def rectangle_screen(self, *args):
         self.manager.current = 'rectangle'
 
-
 class StitchNicheApp(MDApp):
     def build(self):
         sm = ScreenManager()
         sm.add_widget(PatternVisuals(name='visualizer'))
         return sm
-
 
 if __name__ == '__main__':
     StitchNicheApp().run()

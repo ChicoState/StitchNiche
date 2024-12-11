@@ -135,7 +135,6 @@ class PatternScreen(Screen):
         line_height = 20  # Approximate height per line in pixels
         return line_height * content.count('\n') + 40
     
-
 class StitchNicheApp(MDApp):
     def build(self):
         sm = ScreenManager()

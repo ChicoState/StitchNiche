@@ -30,7 +30,6 @@ class ResourcesScreen(Screen):
         nav_bar.left_action_items = [["menu", lambda x: nav_drawer.set_state("toggle")]]
         layout.add_widget(nav_bar)
 
-
         # Banner
         banner = BoxLayout(size_hint=(1, 0.15))
         with banner.canvas.before:
