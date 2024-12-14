@@ -15,3 +15,14 @@ def test_get_matrix():
         color_value_map[v] = ("test: ", (0, 0, 0, 0))
     p = PatternVisualizer(matrix, color_value_map)
     assert p.get_matrix() == matrix
+
+def test_get_matrix_sad():
+    matrix = "wrong type"
+    color_value_map = {}
+    for v in range(0,5):
+        color_value_map[v] = ("test: ", (0, 0, 0, 0))
+
+    try:
+        p = PatternVisualizer(matrix, color_value_map)
+    except Exception:
+        assert True
