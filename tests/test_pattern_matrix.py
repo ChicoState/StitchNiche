@@ -16,6 +16,18 @@ def test_get_matrix():
     p = PatternMatrix(matrix, color_value_map)
     assert p.get_matrix() == matrix
 
+def test_get_matrix_sad():
+    matrix = "wrong type"
+    color_value_map = {}
+
+    for v in range(0,5):
+        color_value_map[v] = ("test: ", (0, 0, 0, 0))
+
+    try:
+        p = PatternMatrix(matrix, color_value_map)
+    except Exception:
+        assert True
+
 
 def test_value_to_color():
     matrix = [[0,0],[1,1]]
@@ -26,12 +38,33 @@ def test_value_to_color():
     p = PatternMatrix(matrix, color_value_map)
     assert p.value_to_color(0) == (0,0,0,0)
 
+def test_value_to_color_sad():
+    matrix = [[0,0],[1,1]]
+    color_value_map = {}
+
+    for v in range(0,5):
+        color_value_map[v] = ("test: ", (0, 0, 0, 0))
+    p = PatternMatrix(matrix, color_value_map)
+    assert p.value_to_color(100) != (0,0,0,0)
+
+
+
 def test_change_color():
     matrix = [[0,0],[1,1]]
     color_value_map = {}
 
     for v in range(0,5):
         color_value_map[v] = ("test: ", (0, 0, 0, 0))
+    p = PatternMatrix(matrix, color_value_map)
+    p.change_color(p.children[0])
+    assert p.get_matrix()[0][0] == 0
+
+def test_change_color_sad():
+    matrix = [[0,0],[1,1]]
+    color_value_map = {}
+
+    for v in range(0,5):
+        color_value_map[v] = ("test: ", (1, 1, 1, 1))
     p = PatternMatrix(matrix, color_value_map)
     p.change_color(p.children[0])
     assert p.get_matrix()[0][0] == 0
