@@ -174,7 +174,7 @@ class GenerateWidgets:
         pass
 
     def generate_number_form(self, input_fields, styles, layout, submit_handler):
-        scroll_view = ScrollView(size_hint=(1, None), height=Window.height * 0.9)
+        scroll_view = ScrollView(size_hint=(1, None), height=Window.height * 1)
         form_layout = GridLayout(cols=3, padding=styles.padding, spacing=[styles.spacing, 10], size_hint_y=None)
         form_layout.bind(minimum_height=form_layout.setter('height'))
 
