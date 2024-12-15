@@ -33,7 +33,7 @@ class ChangeWidthPage(Screen):
             height=35,
             background_color=(1, 1, 1, 1),
             padding=5,
-            spacing=20
+            spacing=10
         )
         input_fields = {
             "Project Measurements:": {                                                                              # header
@@ -163,9 +163,8 @@ class ChangeWidthPage(Screen):
                                             )
         # Format the output
         cast_on, cast_off, row_count, adjustments = result  # Unpack the result
-        formatted_result = f"[b]Cast on #[/b]: {cast_on}\n"
-        formatted_result += f"[b]Cast off #[/b]: {cast_off}\n"
-        formatted_result += f"[b]Total Row Count:[/b] {row_count}\n\n"  # Adding row count display
+        formatted_result = f"[b]Cast on #[/b]: {cast_on} [b]Cast off #[/b]: {cast_off} [b]Total Row Count:[/b] {row_count}\n"
+
 
         # Add "Row number count" header only if adjustments are not empty
         if adjustments:

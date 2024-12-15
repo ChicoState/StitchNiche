@@ -174,7 +174,7 @@ class GenerateWidgets:
         pass
 
     def generate_number_form(self, input_fields, styles, layout, submit_handler):
-        scroll_view = ScrollView(size_hint=(1, 6))
+        scroll_view = ScrollView(size_hint=(1, None), height=Window.height * 1)
         form_layout = GridLayout(cols=3, padding=styles.padding, spacing=[styles.spacing, 10], size_hint_y=None)
         form_layout.bind(minimum_height=form_layout.setter('height'))
 
@@ -215,29 +215,34 @@ class GenerateWidgets:
 
                 text_input.bind(focus=lambda instance, value, tooltip=tooltip_label: setattr(tooltip, 'opacity', 1 if value else 0))
 
-
         def update_tooltips(*args):
             for tooltip in tooltips:
                 new_width = calculate_tooltip_width()
                 tooltip.width = new_width
                 tooltip.text_size = (new_width, None)
 
-
         Window.bind(on_resize=update_tooltips)
 
         scroll_view.add_widget(form_layout)
         layout.add_widget(scroll_view)
 
-        result = Label(text="Result", color=styles.header_color)
+        # Adjust result label position here:
+       # Adjust result label position here:
+         
+
+        result = Label(text="Result", color=styles.header_color, size_hint=(None, None))
+        result.width = Window.width * 0.8  # Ensure the width is within the screen width (adjust as needed)
+        result.height = styles.height  # Set the height to match your desired height
+        result.pos_hint = {"center_y": 0.5, "right": 0.9}  # Position as needed
         layout.add_widget(result)
 
-        submit_button = Button(text="Submit", size_hint=styles.size_hint, height=styles.height,
-                               background_color=styles.background_color)
+        submit_button = Button(text="Submit", size_hint=(0.5, 0.5), height=styles.height * 0.2,
+                            background_color=styles.background_color)
+        submit_button.pos_hint = {"left": 0}  # Align the button to the left
         submit_button.bind(on_press=submit_handler)
         layout.add_widget(submit_button)
 
         return layout, text_inputs, result
-
 
 
     # stitches - columns
