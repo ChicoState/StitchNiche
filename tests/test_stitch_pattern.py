@@ -10,6 +10,7 @@ import random
 
 # test StitchPattern class
 p = StitchPattern()
+newP = StitchPattern()
 
 def test_init_default():
     assert p.smul == 1
@@ -69,10 +70,22 @@ def test_decode_sad():
         assert True
 
 
-
-#TODO: store random value that's created when saved 
 def test_save():
-    assert False
+    matrix = [[0,1,0,1],[-1,-1,-1,-1]]
+    newP.save(newP.id, matrix)
+    filenames = os.listdir("saved_patterns")
+    for tmp in filenames:
+        if newP.id in tmp:
+            assert True
+            return
+    assert False 
 
 def test_load():                           
-    assert False
+    matrix = [[0,1,0,1],[-1,-1,-1,-1]]
+    newP.full_save(matrix)
+    for filename in os.listdir("saved_patterns"):
+        if newP.id in filename:
+            with open(os.path.join("saved_patterns", filename), "r") as file:
+                loaded = file.read()
+            break
+    assert loaded != ""
