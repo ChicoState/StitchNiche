@@ -1,6 +1,7 @@
 import pytest
 from src.utils import StitchPattern
 import os
+import random
 
 """ tests must start with "test_"
  test classes must start with "Test_"
@@ -9,6 +10,7 @@ import os
 
 # test StitchPattern class
 p = StitchPattern()
+newP = StitchPattern()
 
 def test_init_default():
     assert p.smul == 1
@@ -69,10 +71,21 @@ def test_decode_sad():
 
 
 def test_save():
-    matrix = [[1,0,1,0],[1,-1,1,-1]]
-    p.save(p.id, matrix)
-    filename = "saved_patterns/"+p.id+".txt" # TODO:find way to duplicate filename 
-    assert os.path.exists(filename)
+    matrix = [[0,1,0,1],[-1,-1,-1,-1]]
+    newP.save(newP.id, matrix)
+    filenames = os.listdir("saved_patterns")
+    for tmp in filenames:
+        if newP.id in tmp:
+            assert True
+            return
+    assert False 
 
-def test_load():                            # same here ^^^^^
-    assert True
+def test_load():                           
+    matrix = [[0,1,0,1],[-1,-1,-1,-1]]
+    newP.full_save(matrix)
+    for filename in os.listdir("saved_patterns"):
+        if newP.id in filename:
+            with open(os.path.join("saved_patterns", filename), "r") as file:
+                loaded = file.read()
+            break
+    assert loaded != ""
