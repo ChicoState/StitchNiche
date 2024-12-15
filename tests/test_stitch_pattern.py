@@ -1,6 +1,7 @@
 import pytest
 from src.utils import StitchPattern
 import os
+import random
 
 """ tests must start with "test_"
  test classes must start with "Test_"
@@ -68,11 +69,10 @@ def test_decode_sad():
         assert True
 
 
-def test_save():
-    matrix = [[1,0,1,0],[1,-1,1,-1]]
-    p.save(p.id, matrix)
-    filename = "saved_patterns/"+p.id+".txt" # TODO:find way to duplicate filename 
-    assert os.path.exists(filename)
 
-def test_load():                            # same here ^^^^^
-    assert True
+#TODO: store random value that's created when saved 
+def test_save():
+    assert False
+
+def test_load():                           
+    assert False
